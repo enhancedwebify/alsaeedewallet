@@ -1,0 +1,85 @@
+:root{
+    --color-main : #660099;
+    --color-main-light : #66009940;
+
+}
+@font-face {
+    font-family: 'dinnext';
+    src: url('../fonts/DIN NEXT ARABIC REGULAR.otf') format('opentype');
+    font-weight: bolder;
+    font-style: normal;
+}
+*{
+    font-family: 'dinnext'
+}
+/* body { */
+
+
+    /* background: linear-gradient(to bottom, var(--color-main), #d3b4e7);
+    background-attachment: fixed;  */
+    /* Keeps the background static as the user scrolls */
+    /* background-color: #ffffff; */
+/* } */
+.register-container {
+    max-width: 600px;
+    margin: 50px 0;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background-color: #fff;
+    position: relative;
+}
+.btn-primary {
+--bs-btn-bg: var(--color-main);
+--bs-btn-border-color: var(--color-main);
+--bs-btn-hover-bg: var(--color-main-light); /* Slightly darker for hover */
+--bs-btn-hover-border-color: var(--color-main);
+--bs-btn-hover-color: var(--color-main);
+font-weight: 900;
+}
+.form-check-input:checked {
+    background-color: var(--color-main);
+    border-color: var(--color-main);
+}
+.btn.disabled, .btn:disabled, fieldset:disabled .btn{
+
+    --bs-btn-disabled-color: var(--color-main);
+    --bs-btn-disabled-bg: var(--color-main-light);
+    --bs-btn-disabled-border-color: var(--color-main-light);
+}
+.pinTL{
+    position: absolute;
+    background-color: var(--color-main);
+    width: 15px;
+    height: 15px;
+    top: 10px;
+    left: 10px;
+    border-radius: 10px;
+}
+.pinTR{
+    position: absolute;
+    background-color: var(--color-main);
+    width: 15px;
+    height: 15px;
+    top: 10px;
+    right: 10px;
+    border-radius: 10px;
+}
+.pinBL{
+    position: absolute;
+    background-color: var(--color-main);
+    width: 15px;
+    height: 15px;
+    bottom: 10px;
+    left: 10px;
+    border-radius: 10px;
+}
+.pinBR{
+    position: absolute;
+    background-color: var(--color-main);
+    width: 15px;
+    height: 15px;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 10px;
+}
