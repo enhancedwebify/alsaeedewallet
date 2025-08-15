@@ -29,7 +29,7 @@ Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
 // Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
-Route::get('/register', [RegistrationController::class, 'create'])->name('register');
+Route::get('/register', [RegistrationController::class, 'create'])->name('show.register');
 Route::post('/register', [RegistrationController::class, 'store'])->name('register');
 Route::get('/', function () {
     return view('index');
