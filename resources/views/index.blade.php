@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="محفظة آل سعيد الإلكترونية: المنصة المالية لعائلتك">
+    <meta property="og:description" content="محفظة إلكترونية عائلية لإدارة المساهمات والمدخرات والقروض بشفافية تامة.">
+    <meta property="og:image" content="https://www.alsaeedewallet.com/img/familyewallet.png">
+    <meta property="og:url" content="https://www.alsaeedewallet.com">
+    <meta property="og:type" content="website">
     <title>محفظة آل سعيد الإلكترونية - الصفحة الرئيسية</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
