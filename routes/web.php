@@ -22,13 +22,13 @@ Route::middleware(['auth', IsAdmin::class])->prefix('superuser')->group(function
     Route::post('/approve/{user}', [SuperuserController::class, 'approveUser'])->name('superuser.approve');
     Route::post('/logout', [SuperuserController::class, 'logout'])->name('superuser.logout');
 });
-Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
 Route::post('/user/login', [LoginController::class, 'user_login'])->name('user.login');
 Route::get('/user/login', [LoginController::class, 'login_page'])->name('user.login.page');
 Route::get('/user/dashboard', [LoginController::class, 'user_dashboard'])->name('user.dashboard');
 Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
-Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
+// Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 Route::get('/register', [RegistrationController::class, 'create'])->name('register');
 Route::post('/register', [RegistrationController::class, 'store'])->name('register');
 Route::get('/', function () {
