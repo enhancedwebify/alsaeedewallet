@@ -196,7 +196,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; {{date("Y")}} محفظة العائلة الإلكترونية. جميع الحقوق محفوظة.</p>
+            <p>&copy; {{date("Y")}} محفظة آل سعيد الإلكترونية. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
 
