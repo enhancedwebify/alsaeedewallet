@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="iban" class="form-label">اسم البنك</label>
+                        <label for="iban" class="form-label">رقم الشريحة</label>
                         {{-- <input type="text" class="form-control" id="bank_name" name="bank_name" value="{{ old('bank_name') }}" required> --}}
                         <select id="loan_tier_id" name="loan_tier_id" class="form-select" value="{{ old('loan_tier_id') }}" required>
                             <option value="" disabled selected>اختر  رقم الشريحة</option>
