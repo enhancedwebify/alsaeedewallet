@@ -59,6 +59,9 @@
         .id-photo-thumbnail:hover {
             transform: scale(1.05); /* Slight scale on hover */
         }
+        .id_number, .account_number, .iban, .phone_number{
+            text-decoration: none;
+        }
     </style>
     <link rel="stylesheet" href="{{asset('css/styles.css')}}">
 </head>
@@ -131,9 +134,9 @@
             <div >
                 <h2 class="fs-4 fw-bold py-2">بنك الراجحي</h2>
                 <div class="fw-bold text-main">رقم الحساب</div>
-                <div class="fw-bold mb-3">3800010167519</div>
+                <div class="fw-bold mb-3 account_number">3800010167519</div>
                 <div class="fw-bold text-main">رقم الآيبان</div>
-                <div class="fw-bold">SA0380000000608010167519</div>
+                <div class="fw-bold iban">SA0380000000608010167519</div>
             </div>
 
         </div>
