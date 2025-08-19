@@ -8,23 +8,41 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44u2z8yQ4fH9tQ4N3eA1e5l91986c57q0sH49Q1n72x8m152z915yW7M7Q1D9b5s77v0g==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
     <link rel="stylesheet" href="{{asset('css/sstyles.css')}}" type="text/css">
-
+    @include('layout.head')
 </head>
 <body>
 
-    <div class="container">
+    <div id="container" class="m-auto py-3 bg-  px-2 noto-sans-arabic position-relative">
+        <header class="h-100">
+           <!-- place navbar here -->
+            <div class="d-flex position-relative" style="z-index: 1;">
+
+                <div class="logo w-50 mx-auto text-end">
+                    <img src="{{asset('img/familyewallet.png')}}" height="70">
+
+                </div>
+                <div class="position-absolutes w-100 pt-5 d-flex justify-content-center" style="z-index: -1;top: 100px;">
+                    <div class="liquid_shape justify-content-center text-white" style="  display: flex;align-items: center;"> <div class="fw-bold h1 text-center">تسجيل عضو جديد</div></div>
+                </div>
+                <div class="btns w-50 mx-auto text-start">
+                    <a href="{{url('/')}}" class="btn btn-primary">رجوع <i class="bi bi-arrow-left"></i></a>
+                </div>
+            </div>
+       </header>
+       <main class="pt-2 pb-3">
+        <div class="title  pt-5">
         <div class="row justify-content-center">
             <div class="col-md-8 register-container">
                 <div class="pinTL"></div>
                 <div class="pinTR"></div>
                 <div class="pinBL"></div>
                 <div class="pinBR"></div>
-                <h2 class="text-center mb-4">تسجيل عضو جديد</h2>
+                {{-- <h2 class="text-center mb-4">تسجيل عضو جديد</h2> --}}
 
                 <form method="POST" id="myForm" action="{{ url('register') }}" enctype="multipart/form-data">
                     @csrf <div class="mb-3">
                         <label for="full_name" class="form-label">الاسم الكامل</label>
-                        <input type="text" class="form-control" id="full_name" name="full_name" value="{{ old('full_name') }}" required autofocus>
+                        <input type="text" class="form-control form-control-lg" id="full_name" name="full_name" value="{{ old('full_name') }}" required autofocus>
                         @error('full_name')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
@@ -32,7 +50,7 @@
 
                     <div class="mb-3">
                         <label for="id_number" class="form-label">السجل المدني</label>
-                        <input type="text" class="form-control" id="id_number" name="id_number" value="{{ old('id_number') }}" required>
+                        <input type="text" class="form-control form-control-lg" id="id_number" name="id_number" value="{{ old('id_number') }}" required>
                         @error('id_number')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
@@ -40,7 +58,7 @@
 
                     <div class="mb-3">
                         <label for="phone_number" class="form-label">رقم الجوال</label>
-                        <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" required>
+                        <input type="tel" class="form-control form-control-lg" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" required>
                         @error('phone_number')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
@@ -48,7 +66,7 @@
 
                     <div class="mb-3">
                         <label for="email" class="form-label">البريد الإلكتروني</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+                        <input type="email" class="form-control form-control-lg" id="email" name="email" value="{{ old('email') }}" required>
                         @error('email')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
@@ -57,7 +75,7 @@
                     <div class="mb-3">
                         <label for="iban" class="form-label">رقم الشريحة</label>
                         {{-- <input type="text" class="form-control" id="bank_name" name="bank_name" value="{{ old('bank_name') }}" required> --}}
-                        <select id="loan_tier_id" name="loan_tier_id" class="form-select" value="{{ old('loan_tier_id') }}" required>
+                        <select id="loan_tier_id" name="loan_tier_id" class="form-select form-select-lg" value="{{ old('loan_tier_id') }}" required>
                             <option value="" disabled selected>اختر  رقم الشريحة</option>
 
                             @foreach ($loan_tiers as $tier)
@@ -73,7 +91,7 @@
                     <div class="mb-3">
                         <label for="iban" class="form-label">اسم البنك</label>
                         {{-- <input type="text" class="form-control" id="bank_name" name="bank_name" value="{{ old('bank_name') }}" required> --}}
-                        <select id="bank_name" name="bank_name" class="form-select" value="{{ old('bank_name') }}" required>
+                        <select id="bank_name" name="bank_name" class="form-select form-select-lg" value="{{ old('bank_name') }}" required>
                             <option value="" disabled selected>اختر البنك</option>
                             <option value="البنك الأهلي السعودي">البنك الأهلي السعودي</option>
                             <option value="مصرف الراجحي">مصرف الراجحي</option>
@@ -95,7 +113,7 @@
 
                     <div class="mb-3">
                         <label for="iban" class="form-label">رقم الحساب</label>
-                        <input type="text" class="form-control" id="bank_account_number" name="bank_account_number" value="{{ old('bank_account_number') }}" required>
+                        <input type="text" class="form-control form-control-lg" id="bank_account_number" name="bank_account_number" value="{{ old('bank_account_number') }}" required>
                         @error('bank_account_number')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
@@ -103,7 +121,7 @@
 
                     <div class="mb-3">
                         <label for="iban" class="form-label">رقم IBAN</label>
-                        <input type="text" class="form-control" id="iban" name="iban" value="{{ old('iban') }}" required>
+                        <input type="text" class="form-control form-control-lg" id="iban" name="iban" value="{{ old('iban') }}" required>
                         @error('iban')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
@@ -111,7 +129,7 @@
 
                     <div class="mb-3">
                         <label for="id_photo" class="form-label">صورة من الأحوال (صورة الهوية الوطنية)</label>
-                        <input type="file" class="form-control" id="id_photo" name="id_photo" required>
+                        <input type="file" class="form-control form-control-lg" id="id_photo" name="id_photo" required>
                         @error('id_photo')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
@@ -119,7 +137,7 @@
 
                     <div class="mb-3">
                         <label for="password" class="form-label">كلمة المرور</label>
-                        <input type="password" class="form-control" id="password" name="password" required autocomplete="new-password">
+                        <input type="password" class="form-control form-control-lg" id="password" name="password" required autocomplete="new-password">
                         @error('password')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
@@ -127,11 +145,11 @@
 
                     <div class="mb-3">
                         <label for="password_confirmation" class="form-label">تأكيد كلمة المرور</label>
-                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                        <input type="password" class="form-control form-control-lg" id="password_confirmation" name="password_confirmation" required>
                     </div>
 
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="terms_correct" name="terms_correct" required>
+                        <input type="checkbox" class="form-check-input " id="terms_correct" name="terms_correct" required>
                         <label class="form-check-label" for="terms_correct">
                             أقر أن جميع البيانات المدخلة صحيحة.
                         </label>
@@ -154,15 +172,17 @@
                         <label class="form-check-label" for="terms_agreed">
                             <span>أوافق على الشروط والأحكام.</span>
                         </label>
-                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#termsModal">اللائحة المرفقة</a>.
+                        <a href="#" class="btn btn-primary btn-lg my-1" data-bs-toggle="modal" data-bs-target="#termsModal">اللائحة المرفقة</a>.
                          @error('terms_agreed')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div>
 
 
-                    <button type="submit" id="submitForm" class="btn btn-primary w-100" disabled onclick="this.preventDefault()">تسجيل</button>
+                    <button type="submit" id="submitForm" class="btn btn-primary btn-lg w-100" disabled onclick="this.preventDefault()">تسجيل</button>
                 </form>
+            </div>
+            </main>
             </div>
         </div>
     </div>

@@ -22,13 +22,32 @@ Route::middleware(['auth', IsAdmin::class])->prefix('superuser')->group(function
     Route::post('/approve/{user}', [SuperuserController::class, 'approveUser'])->name('superuser.approve');
     Route::post('/logout', [SuperuserController::class, 'logout'])->name('superuser.logout');
 });
+Route::middleware(['auth'])->group(function () {
+    // Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+    Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
+    // Dummy routes for the sidebar links
+    Route::get('/profile', function () {
+        return view('user.profile'); // Assuming you will create a profile view
+    })->name('user.profile');
+
+    Route::get('/contributions', function () {
+        return view('user.contributions'); // A page for contributions history
+    })->name('contributions.index');
+
+    Route::get('/loans', function () {
+        return view('user.loans'); // A page for loan details
+    })->name('loans.index');
+
+    Route::get('/transactions', function () {
+        return view('user.transactions'); // A page for all transactions
+    })->name('transactions.index');
+});
+
 Route::post('/user/login', [LoginController::class, 'user_login'])->name('user.login');
 Route::get('/user/login', [LoginController::class, 'login_page'])->name('user.login.page');
 Route::get('/user/dashboard', [LoginController::class, 'user_dashboard'])->name('user.dashboard');
 Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
-// Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
-Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 Route::get('/register', [RegistrationController::class, 'create'])->name('show.register');
 Route::post('/register', [RegistrationController::class, 'store'])->name('register');
 Route::get('/', function () {
@@ -38,20 +57,3 @@ Route::get('/login', function () {
     return view('login');
 });
 
-
-// Dummy routes for the sidebar links
-Route::get('/profile', function () {
-    return view('user.profile'); // Assuming you will create a profile view
-})->name('user.profile');
-
-Route::get('/contributions', function () {
-    return view('user.contributions'); // A page for contributions history
-})->name('contributions.index');
-
-Route::get('/loans', function () {
-    return view('user.loans'); // A page for loan details
-})->name('loans.index');
-
-Route::get('/transactions', function () {
-    return view('user.transactions'); // A page for all transactions
-})->name('transactions.index');

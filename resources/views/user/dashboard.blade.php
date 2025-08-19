@@ -35,6 +35,7 @@
         }
         /* Mobile: The offcanvas container is handled by Bootstrap's JS */
     </style>
+    @include('layout.head')
 </head>
 <body>
     @include('layout.sidebar')
@@ -76,7 +77,7 @@
             <div class="col-md-8">
                 <div class="card p-4 h-100 d-flex flex-column justify-content-center">
                     <div class="d-flex justify-content-around flex-wrap">
-                        <a href="#" class="btn btn-lg btn-success fw-bold m-2" style="background-color: #38c172; border-color: #38c172;">
+                        <a href="#" class="btn btn-lg btn-primary fw-bold m-2"  >
                             <i class="bi bi-wallet2"></i> إيداع مساهمة جديدة
                         </a>
                         <a href="#" class="btn btn-lg btn-warning fw-bold m-2" style="background-color: #ffc800; border-color: #ffc800;">
@@ -93,13 +94,13 @@
                     <h5 class="fw-bold">حالة الطلب</h5>
                     @foreach ($user->approvals as $approval)
 
-                    <div class="fw-bold"><span class="fw-bold">الشريحة رقم : </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
-                    @if ($approval->status=='approved')
+                    <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
+                    @if ($approval->status =='approved')
                             <span class="badge bg-success py-2 px-3 fw-normal fs-6">تمت الموافقة على حسابك</span>
-                        @else
+                    @else
                             <span class="badge bg-warning text-dark py-2 px-3 fw-normal fs-6">طلبك قيد المراجعة</span>
-                        @endif
-                        <p class="text-muted mt-2 mb-0">نحن نعمل على مراجعة طلبك وإعلامك بالنتيجة قريباً.</p>
+                    @endif
+                            <p class="text-muted mt-2 mb-0">نحن نعمل على مراجعة طلبك وإعلامك بالنتيجة قريباً.</p>
                     @endforeach
                 </div>
             </div>
