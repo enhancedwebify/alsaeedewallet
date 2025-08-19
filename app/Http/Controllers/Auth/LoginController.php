@@ -59,7 +59,7 @@ class LoginController extends Controller
     }
     public function user_dashboard()
     {
-        $requests = User::where('id_number',id_number())->first();
+        $requests = User::where('id_number',id_number())->with('loanTier')->first();
         return view('user.dashboard',compact('requests'));
     }
 

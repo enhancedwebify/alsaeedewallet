@@ -100,7 +100,7 @@
             background-size: 100% 100%;
         }
         .feature-card {
-            background-color: var(--color-main-light);
+            /* background-color: var(--color-main-light); */
             border-radius: 10px;
             padding: 30px;
             text-align: center;
@@ -136,7 +136,7 @@
 
     <header class="hero-section">
         <div class="container" data-aos="fade-up">
-            <h1 data-aos="fade-up" data-aos-duration="1000">محفظة آل سعيد الإلكترونية</h1>
+            <h1 data-aos="fade-up" data-aos-duration="1000">محفظة آل سعيّد الإلكترونية</h1>
             <p data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
                 حل متكامل لإدارة الأموال والمساهمات والقروض العائلية بسهولة وأمان.
                 سجل الآن لتنظيم أموال عائلتك بطريقة حديثة وشفافة.
@@ -150,21 +150,21 @@
             <h2 data-aos="fade-up">خدمات المستفيدين</h2>
             <div class="row g-4">
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-card">
+                    <div class="feature-card shadow-md">
                         <i class="bi bi-wallet2 feature-icon"></i>
                         <h4 class="mt-3">إدارة المساهمات</h4>
                         <p>تتبع المساهمات الشهرية من جميع أفراد العائلة بشكل آلي ومنظم.</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
-                    <div class="feature-card">
+                    <div class="feature-card shadow-md">
                         <i class="bi bi-cash-stack feature-icon"></i>
                         <h4 class="mt-3">نظام القروض</h4>
                         <p>إدارة طلبات القروض العائلية ومتابعة عمليات السداد بمرونة وشفافية.</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="600">
-                    <div class="feature-card">
+                    <div class="feature-card shadow-md">
                         <i class="bi bi-shield-lock feature-icon"></i>
                         <h4 class="mt-3">أمان تام</h4>
                         <p>نضمن حماية بياناتك ومعاملاتك المالية بأحدث تقنيات الأمان والحماية.</p>
@@ -176,14 +176,14 @@
             <h2 data-aos="fade-up">سجل الدخول لمتابعة طلباتك ومساهماتك</h2>
             <div class="row g-4">
                 <a href="{{route('user.login')}}" class="col-md-6 text-decoration-none" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-card">
+                    <div class="feature-card shadow-md">
                         <i class="bi bi-person feature-icon"></i>
                         <h4 class="mt-3">دخول الأفراد</h4>
                         <p class="text-dark">تتبع مساهماتك وانشاء الطلبات.</p>
                     </div>
                 </a>
                 <a href="{{route('superuser.login')}}" class="col-md-6 text-decoration-none" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-card">
+                    <div class="feature-card shadow-md">
                         <i class="bi bi-person feature-icon"></i>
                         <h4 class="mt-3">دخول المدراء</h4>
                         <p class="text-dark">تتبع مساهماتك وانشاء الطلبات.</p>
@@ -196,7 +196,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; {{date("Y")}} محفظة آل سعيد الإلكترونية. جميع الحقوق محفوظة.</p>
+            <p>&copy; {{date("Y")}} محفظة آل سعيّد الإلكترونية. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
 
