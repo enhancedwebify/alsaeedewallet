@@ -30,7 +30,7 @@
             /* background: linear-gradient(to right, var(--color-main), #5a008a); */
             background-image: url("{{asset('img/Gemini_Generated_Image_b6xqab6xqab6xqab.png')}}");
             background-size: cover;
-            background-position: center;
+            background-position: bottom;
             background-repeat: no-repeat;
             color: white;
             padding: 80px 0;
