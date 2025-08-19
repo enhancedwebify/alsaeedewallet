@@ -51,4 +51,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(LoanTier::class);
     }
+    public function approvals()
+    {
+        return $this->hasMany(ContributionApprovals::class, 'user_id');
+    }
 }
