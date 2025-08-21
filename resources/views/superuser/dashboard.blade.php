@@ -4,10 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"  >
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <style>
+        /* Custom primary color */
+            :root {
+            --main-color: #2c3e50; /* A dark, professional color */
+            }
+
+            .text-main {
+            color: var(--main-color) !important;
+            }
+
+            .btn-main {
+            background-color: var(--main-color);
+            color: #fff;
+            border-color: var(--main-color);
+            }
+
+            .btn-main:hover {
+            background-color: #34495e;
+            border-color: #34495e;
+            }
+
+            /* Styles for the dashboard icons */
+            .icon-shape {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            vertical-align: middle;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            background-color: var(--main-color); /* Matches the main color */
+            }
+
+            .card-stats {
+            border-radius: 0.5rem;
+            transition: transform 0.2s ease-in-out;
+            }
+
+            .card-stats:hover {
+            transform: translateY(-5px);
+            }
         .card {
             border-radius: 1rem;
             border: 1px solid #e9ecef;
@@ -80,7 +122,7 @@
                                 <div class="row">
                                     <div class="col-8">
                                         <span class="h2 font-weight-bold mb-0">{{ $pending_requests }}</span>
-                                        <h5 class="card-title text-uppercase text-muted mb-0">طلبات الموافقة المعلقة</h5>
+                                        <h5 class="card-title text-uppercase text-muted mb-0">طلبات الموافقة</h5>
                                     </div>
                                     <div class="col-4 text-end">
                                         <i class="bi bi-hourglass-split icon-shape text-white rounded-circle"></i>
@@ -144,11 +186,17 @@
                                         @forelse ($pendingApprovals as $request)
                                         <tr>
                                             <td>{{ $request->user->full_name }}</td>
-                                            <td>{{ $request->type }}</td>
+                                            <td>{{ str_replace(
+                                                    ['contribution'],
+                                                    ['مساهمة'],
+                                                    $request->type) }}</td>
                                             <td>{{ $request->created_at->format('Y-m-d') }}</td>
-                                            <td><span class="badge bg-warning text-dark">{{ $request->status }}</span></td>
+                                            <td><span class="badge bg-warning text-dark">{{ str_replace(
+                                                    ['pending','approved'],
+                                                    ['انتظار','مقبول'],
+                                                    $request->status) }}</span></td>
                                             <td>
-                                                <a   class="btn btn-sm btn-main">عرض التفاصيل</a>
+                                                <a href="{{ route('admin.approvals.show', $request->id) }}"  class="btn btn-sm btn-main">عرض التفاصيل</a>
                                             </td>
                                         </tr>
                                         @empty

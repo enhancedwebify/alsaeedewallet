@@ -47,12 +47,13 @@ Route::middleware(['auth'])->group(function () {
         return view('user.transactions'); // A page for all transactions
     })->name('transactions.index');
 });
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Pending Approvals Routes
     Route::get('/approvals/pending', [DashboardController::class, 'pendingApprovals'])->name('approvals.pending');
+    Route::post('/approvals/process/{id}', [DashboardController::class, 'processApproval'])->name('approvals.process');
     Route::get('/approvals/{id}', [DashboardController::class, 'showApproval'])->name('approvals.show');
 
     // User Management Routes
