@@ -5,6 +5,11 @@ use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SuperuserController;
 use App\Http\Middleware\IsAdmin;
+use App\Http\Controllers\Admin\LoanController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ContributionController;
+use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/terms-as-images', [App\Http\Controllers\DocumentsController::class, 'showTermsAsImages'])->name('terms.images');
 // This route will show the full page with the embedded PDF
@@ -42,7 +47,29 @@ Route::middleware(['auth'])->group(function () {
         return view('user.transactions'); // A page for all transactions
     })->name('transactions.index');
 });
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Dashboard Route
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Pending Approvals Routes
+    Route::get('/approvals/pending', [DashboardController::class, 'pendingApprovals'])->name('approvals.pending');
+    Route::get('/approvals/{id}', [DashboardController::class, 'showApproval'])->name('approvals.show');
+
+    // User Management Routes
+    Route::resource('users', UserController::class);
+
+    // Contribution Management Routes
+    Route::resource('contributions', ContributionController::class);
+
+    // Loan Management Routes
+    Route::resource('loans', LoanController::class);
+
+    // Reports Routes
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+
+    // Settings Route
+    Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
+});
 Route::post('/user/login', [LoginController::class, 'user_login'])->name('user.login');
 Route::get('/user/login', [LoginController::class, 'login_page'])->name('user.login.page');
 Route::get('/user/dashboard', [LoginController::class, 'user_dashboard'])->name('user.dashboard');

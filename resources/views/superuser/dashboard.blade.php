@@ -3,149 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم المسؤول</title>
+    <title>لوحة التحكم</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <style>
-        /* Custom CSS for a better mobile experience */
-        @media (max-width: 768px) {
-            .table.responsive-table thead {
-                display: none; /* Hide the table header on small screens */
+        .card {
+            border-radius: 1rem;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+        .text-main {
+            color: #551d7c; /* Assuming this is your main purple color */
+        }
+        .bg-main-light {
+            background-color: #f7f2fb;
+        }
+        .progress-bar-loan {
+            background-color: #f5c53c;
+        }
+          /* This is a simple fix for the main content area on desktop */
+        @media (min-width: 768px) {
+            body {
+                padding-right: 250px; /* Adjust this value to match your sidebar's width */
             }
-
-            .table.responsive-table tbody tr {
-                display: block;
-                margin-bottom: 1.5rem;
-                border: 1px solid #dee2e6;
-                border-radius: .25rem;
-                background-color: #fff;
-            }
-
-            .table.responsive-table td {
-                display: block;
-                text-align: right;
-                padding-right: 1rem;
-                border: none;
-                position: relative;
-                padding-bottom: 0.5rem;
-            }
-
-            /* Add labels to each cell using the data-label attribute */
-            .table.responsive-table td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                display: block;
-                padding-bottom: 0.25rem;
-                color: #6c757d;
-                text-align: right;
-                border-bottom: 1px solid #e9ecef;
-                margin-bottom: 0.5rem;
+            .main-content {
+                padding-left: 15px; /* Adds a small gutter */
+                padding-right: 15px;
             }
         }
-        /* Custom CSS for a better mobile experience */
-        @media (max-width: 768px) {
-            /* ... existing mobile responsive styles ... */
-        }
-        .id-photo-thumbnail {
-            width: 80px; /* Slightly smaller for better fit */
-            height: auto;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 auto; /* Center the thumbnail */
-            display: block; /* Required for margin: 0 auto to work */
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); /* Subtle shadow */
-            transition: transform 0.2s ease-in-out;
-        }
-        .id-photo-thumbnail:hover {
-            transform: scale(1.05); /* Slight scale on hover */
-        }
+        /* Mobile: The offcanvas container is handled by Bootstrap's JS */
     </style>
-    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
     @include('layout.head')
 </head>
+
 <body>
+    {{-- This is the main container for the dashboard. It will house the sidebar and the content. --}}
+    @include('layout.sidebar_superuser')
     <div class="container mt-5">
-        @include('layout.header')
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="text-main">طلبات التسجيل الجديدة</h2>
 
-        </div>
+        {{-- The Admin Sidebar --}}
+        {{-- You may need to create a separate sidebar file for admin navigation links --}}
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <div id="page-content-wrapper">
+            {{-- The top header/navbar --}}
+            {{-- @include('layout.header') --}}
 
-        <div class="table-responsive">
-            <table class="table responsive-table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>الاسم الكامل</th>
-                        <th>
-                            <div>الهوية الوطنية</div>
-                            <div>والمعلومات</div>
-                        </th>
-                        <th>
-                            <div>المعلومات البنكية</div>
-                        </th>
-                        {{-- <th>رقم الجوال</th> --}}
-                        <th>الإجراء</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($pendingRequests as $request)
-                        <tr>
-                            <td data-label="الاسم الكامل">
-                                <h3>{{ $request->full_name }}</h3>
-                                <div class="pt-3 col-12 col-md-6 py-3 py-md-3">
-                                    @if ($request->id_photo_path)
-                                        <a href="{{ asset('storage/' . $request->id_photo_path) }}"
-                                        data-glightbox="type:image"
-                                        data-title="{{ 'صورة هوية: ' . $request->full_name }}">
-                                            <img src="{{ asset('storage/' . $request->id_photo_path) }}"
-                                                alt="صورة الهوية"
-                                                class="id-photo-thumbnail w-100 glightbox" height="100%" >
-                                        </a>
-                                    @else
-                                        <span class="text-muted">لا توجد صورة</span>
-                                    @endif
+            {{-- The main content of the dashboard --}}
+            <div class="container-fluid py-4">
+                <div class="row">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="text-main fw-bold">لوحة تحكم الإدارة</h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 mb-4">
+                        <div class="card card-stats shadow border-0">
+                            <div class="card-body p-4">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <span class="h2 font-weight-bold mb-0">{{ $total_users }}</span>
+                                        <h5 class="card-title text-uppercase text-muted mb-0">إجمالي المستخدمين</h5>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <i class="bi bi-people-fill icon-shape text-white rounded-circle"></i>
+                                    </div>
                                 </div>
-                            </td>
-                            <td data-label="الهوية الوطنية والمعلومات">
-                                <div>{{ $request->id_number }}</div>
-                                <div>{{ $request->email }}</div>
-                                <div>{{ $request->phone_number }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card card-stats shadow border-0">
+                            <div class="card-body p-4">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <span class="h2 font-weight-bold mb-0">{{ $pending_requests }}</span>
+                                        <h5 class="card-title text-uppercase text-muted mb-0">طلبات الموافقة المعلقة</h5>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <i class="bi bi-hourglass-split icon-shape text-white rounded-circle"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card card-stats shadow border-0">
+                            <div class="card-body p-4">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <span class="h2 font-weight-bold mb-0">{{ $total_contributions }}</span>
+                                        <h5 class="card-title text-uppercase text-muted mb-0">إجمالي المساهمات</h5>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <i class="bi bi-cash-stack icon-shape text-white rounded-circle"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card card-stats shadow border-0">
+                            <div class="card-body p-4">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <span class="h2 font-weight-bold mb-0">{{ $total_loans }}</span>
+                                        <h5 class="card-title text-uppercase text-muted mb-0">إجمالي القروض</h5>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <i class="bi bi-currency-dollar icon-shape text-white rounded-circle"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-
-                            </td>
-                            <td data-label="المعلومات البنكية">
-                                <div>{{ $request->bank_name }}</div>
-                                <div>{{ $request->bank_account_number }}</div>
-                                <div>{{ $request->iban }}</div>
-                            </td>
-                            {{-- <td data-label="رقم الجوال"></td> --}}
-                            <td data-label="الإجراء">
-                                <form action="{{ route('superuser.approve', $request->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-primary btn-md">الموافقة</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="text-center">لا توجد طلبات تسجيل جديدة حاليًا.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="card shadow border-0">
+                            <div class="card-header p-4 bg-transparent border-0 d-flex justify-content-between align-items-center">
+                                <h3 class="mb-0 fw-bold">طلبات الموافقة الأخيرة</h3>
+                                <a href="#" class="btn btn-sm btn-main">عرض الكل</a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-items-center table-flush">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" class="text-uppercase text-secondary">اسم المستخدم</th>
+                                            <th scope="col" class="text-uppercase text-secondary">النوع</th>
+                                            <th scope="col" class="text-uppercase text-secondary">تاريخ الطلب</th>
+                                            <th scope="col" class="text-uppercase text-secondary">الحالة</th>
+                                            <th scope="col" class="text-uppercase text-secondary">الإجراء</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                        {{-- Placeholder for a loop through your pending requests --}}
+                                        @forelse ($pendingApprovals as $request)
+                                        <tr>
+                                            <td>{{ $request->user->full_name }}</td>
+                                            <td>{{ $request->type }}</td>
+                                            <td>{{ $request->created_at->format('Y-m-d') }}</td>
+                                            <td><span class="badge bg-warning text-dark">{{ $request->status }}</span></td>
+                                            <td>
+                                                <a   class="btn btn-sm btn-main">عرض التفاصيل</a>
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">لا توجد طلبات معلقة حاليًا.</td>
+                                        </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
-    <script>
-        const lightbox = GLightbox({
-            touchNavigation: true,
-            loop: false,
-            autoplayVideos: false
-        });
-    </script>
+
+    {{-- The footer and closing scripts --}}
+    {{-- @include('layout.footer') --}}
 </body>
+
 </html>

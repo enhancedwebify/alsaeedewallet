@@ -13,7 +13,11 @@ class ContributionApprovals extends Model
     protected $primaryKey = 'id';
     protected $table = 'contribution_approvals';
     protected $guarded = [];
-
+       // Define the relationship to the User model
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function loanTier()
     {
         return $this->belongsTo(LoanTier::class, 'loan_tier_id');

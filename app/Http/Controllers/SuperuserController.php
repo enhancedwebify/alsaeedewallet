@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\ContributionApprovals;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,7 +44,25 @@ class SuperuserController extends Controller
     {
         // Fetch users who are not yet approved
         $pendingRequests = User::where('is_approved', false)->get();
-        return view('superuser.dashboard', compact('pendingRequests'));
+        // return view('superuser.dashboard', compact('pendingRequests'));
+         // Fetch data for the dashboard cards
+        $total_users = User::count();
+        $pending_requests = ContributionApprovals::where('status', 'pending')->count();
+
+        // Assuming you have a 'contributions' and 'loans' table
+        $total_contributions = 0; // Or Contribution::sum('amount');
+        $total_loans = 0; // Or Loan::sum('amount');
+
+        // Fetch the pending requests for the table
+        $pendingApprovals = ContributionApprovals::with('user')->where('status', 'pending')->latest()->take(10)->get();
+
+        return view('superuser.dashboard', [
+            'total_users' => $total_users,
+            'pending_requests' => $pending_requests,
+            'total_contributions' => $total_contributions,
+            'total_loans' => $total_loans,
+            'pendingApprovals' => $pendingApprovals,
+        ]);
     }
 
     /**
