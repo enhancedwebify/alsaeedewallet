@@ -176,14 +176,14 @@
             <h2 data-aos="fade-up">سجل الدخول لمتابعة طلباتك ومساهماتك</h2>
             <div class="row g-4">
                 <a href="{{route('user.login')}}" class="col-md-6 text-decoration-none" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-card shadow-md">
+                    <div class="feature-card bg-main-light shadow-md">
                         <i class="bi bi-person feature-icon"></i>
                         <h4 class="mt-3">دخول الأفراد</h4>
                         <p class="text-dark">تتبع مساهماتك وانشاء الطلبات.</p>
                     </div>
                 </a>
                 <a href="{{route('superuser.login')}}" class="col-md-6 text-decoration-none" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-card shadow-md">
+                    <div class="feature-card bg-main-light shadow-md">
                         <i class="bi bi-person feature-icon"></i>
                         <h4 class="mt-3">دخول المدراء</h4>
                         <p class="text-dark">تتبع مساهماتك وانشاء الطلبات.</p>
