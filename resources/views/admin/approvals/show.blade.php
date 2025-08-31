@@ -80,7 +80,7 @@
     @include('layout.head')
 </head>
 <body>
-    @include('layout.sidebar')
+    @include('layout.sidebar_superuser')
     <div class="container mt-5">
 
         <div id="page-content-wrapper">
@@ -126,7 +126,7 @@
                             <h5 class="fw-bold text-main mb-3">صورة الهوية</h5>
                             @if ($approval->user->id_photo_path)
                             <a href="{{ asset('storage/' . $approval->user->id_photo_path) }}" data-glightbox="type:image" data-title="صورة هوية: {{ $approval->user->full_name }}">
-                                <img src="{{ asset('storage/' . $approval->user->id_photo_path) }}" class="img-fluid rounded shadow-sm" alt="صورة الهوية">
+                                <img src="{{ asset('storage/' . $approval->user->id_photo_path) }}" class="img-fluids glightbox rounded shadow-sm" height="220px" alt="صورة الهوية">
                             </a>
                             @else
                             <div class="text-muted">لا توجد صورة هوية مرفوعة.</div>
@@ -142,11 +142,15 @@
                             <form action="{{ route('admin.approvals.process', $approval->id) }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="loan_tier_id" class="form-label">اختيار الفئة المناسبة:</label>
+                                    <label for="loan_tier_id" class="form-label">الشريحة المختارة:</label>
+
                                     <select name="loan_tier_id" id="loan_tier_id" class="form-select" required>
                                         <option value="">اختر فئة</option>
                                         @foreach ($loanTiers as $tier)
-                                            <option value="{{ $tier->id }}">{{ 'الفئة ' . $tier->tier_number }}</option>
+                                            @if($approval->loan_tier_id == $tier->tier_number)
+                                            {{-- <option value="{{ $tier->id }}">{{ 'الفئة ' . $tier->tier_number }}</option> --}}
+                                            <option selected value="{{$tier->tier_number}}">شريحة رقم {{$tier->tier_number}} المساهمة {{$tier->contribution_amount}} ريال مدة {{$tier->contribution_period_months}} شهر</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -165,6 +169,6 @@
             </div>
         </div>
     </div>
-    {{-- @include('layout.footer') --}}
+    @include('layout.scripts')
 </body>
 </html>

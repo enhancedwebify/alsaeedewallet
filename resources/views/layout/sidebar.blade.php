@@ -16,7 +16,7 @@
     </div>
 </nav>
 
-<div class="w-100 px-2 py-2">
+<div class="w-100 px-2 py-2 d-md-none d-block">
     <a href="{{ route('user.dashboard') }}">
           <img src="{{asset('img/familyewallet.png')}}" alt="شعار المحفظة" class="img-fluid" style="max-width: 70px;">
       </a>

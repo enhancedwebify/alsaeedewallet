@@ -29,7 +29,7 @@ class DashboardController extends Controller
 
         // Check if the approval is not already processed
         if ($approval->status !== 'pending') {
-            return redirect()->route('admin.dashboard')->with('error', 'هذا الطلب تم التعامل معه بالفعل.');
+            return redirect()->route('superuser.dashboard')->with('error', 'هذا الطلب تم التعامل معه بالفعل.');
         }
 
         // Get the action from the form (approve or reject)
@@ -55,7 +55,7 @@ class DashboardController extends Controller
                 $user->save();
             }
 
-            return redirect()->route('admin.dashboard')->with('success', 'تمت الموافقة على الطلب بنجاح.');
+            return redirect()->route('superuser.dashboard')->with('success', 'تمت الموافقة على الطلب بنجاح.');
 
         } elseif ($action === 'reject') {
             // Update the approval record
@@ -65,7 +65,7 @@ class DashboardController extends Controller
 
             // For a rejection, we don't update the user's is_approved status or loan tier
 
-            return redirect()->route('admin.dashboard')->with('success', 'تم رفض الطلب بنجاح.');
+            return redirect()->route('superuser.dashboard')->with('success', 'تم رفض الطلب بنجاح.');
         }
 
         return redirect()->back()->with('error', 'إجراء غير صالح.');

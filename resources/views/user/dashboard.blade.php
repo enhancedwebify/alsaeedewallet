@@ -51,21 +51,21 @@
         </div>
         <div class="row mb-4">
             <div class="col-md-4">
-                <div class="card bg-main-light p-4 text-center">
+                <div class="card shadow border-0 p-4 text-center">
                     <h5 class="card-title fw-bold">إجمالي المساهمات</h5>
                     <h2 class="card-text fw-bold text-main">{{ number_format($total_contributions ?? 0, 2) }} ريال</h2>
                     <p class="text-muted">آخر تحديث: اليوم</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card p-4 text-center">
+                <div class="card shadow border-0 p-4 text-center">
                     <h5 class="card-title fw-bold">الرصيد المتاح للقرض</h5>
                     <h2 class="card-text fw-bold">{{ number_format($available_loan_balance ?? 0, 2) }} ريال</h2>
                     <p class="text-muted">مبلغ قرضك الحالي</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card p-4 text-center">
+                <div class="card shadow border-0 p-4 text-center">
                     <h5 class="card-title fw-bold">قسط الشهر القادم</h5>
                     <h2 class="card-text fw-bold text-main">{{ number_format($next_payment_amount ?? 0, 2) }} ريال</h2>
                     <p class="text-muted">تاريخ الاستحقاق: 15 أغسطس</p>
@@ -73,42 +73,45 @@
             </div>
         </div>
 
-        <div class="row mb-5">
-            <div class="col-md-8">
-                <div class="card p-4 h-100 d-flex flex-column justify-content-center">
-                    <div class="d-flex justify-content-around flex-wrap">
-                        <a href="#" class="btn btn-lg btn-primary fw-bold m-2"  >
-                            <i class="bi bi-wallet2"></i> إيداع مساهمة جديدة
-                        </a>
-                        <a href="#" class="btn btn-lg btn-warning fw-bold m-2" style="background-color: #ffc800; border-color: #ffc800;">
-                            <i class="bi bi-cash-stack"></i> طلب قرض جديد
-                        </a>
-                        <a href="#" class="btn btn-lg btn-info fw-bold m-2" style="background-color: #17a2b8; border-color: #17a2b8;">
-                            <i class="bi bi-arrow-right-circle"></i> سداد قسط
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-4 h-100">
+        <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card shadow border-0  p-4 h-100">
                     <h5 class="fw-bold">حالة الطلب</h5>
                     @foreach ($user->approvals as $approval)
 
                     <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
                     @if ($approval->status =='approved')
                             <span class="badge bg-success py-2 px-3 fw-normal fs-6">تمت الموافقة على حسابك</span>
+                    @elseif($approval->status =='rejected')
+                        <span class="badge alert alert-danger text-dark py-2 px-3 fw-normal fs-6">{{$approval->notes}}</span>
                     @else
-                            <span class="badge bg-warning text-dark py-2 px-3 fw-normal fs-6">طلبك قيد المراجعة</span>
+                    <span class="badge bg-warning text-dark py-2 px-3 fw-normal fs-6">طلبك قيد المراجعة</span>
+                    <p class="text-muted mt-2 mb-0">نحن نعمل على مراجعة طلبك وإعلامك بالنتيجة قريباً.</p>
                     @endif
-                            <p class="text-muted mt-2 mb-0">نحن نعمل على مراجعة طلبك وإعلامك بالنتيجة قريباً.</p>
                     @endforeach
                 </div>
             </div>
+            <div class="col-md-4 mb-3">
+                <div class="card shadow border-0  p-4 h-100 d-flex flex-column justify-content-center">
+                    <div class="d-flex justify-content-around flex-wrap">
+                        <a href="#" class="btn btn-lg btn-primary fw-bold m-2 w-100"  >
+                            <i class="bi bi-wallet2"></i> إيداع مساهمة جديدة
+                        </a>
+                        <a href="#" class="btn btn-lg btn-warning fw-bold m-2 w-100" style="background-color: #ffc800; border-color: #ffc800;">
+                            <i class="bi bi-cash-stack"></i> طلب قرض جديد
+                        </a>
+                        <a href="#" class="btn btn-lg btn-info fw-bold m-2 w-100" style="background-color: #17a2b8; border-color: #17a2b8;">
+                            <i class="bi bi-arrow-right-circle"></i> سداد قسط
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <div class="card p-4">
+                <div class="card shadow border-0  p-4">
                     <h4 class="card-title text-main fw-bold mb-3">بياناتي الشخصية</h4>
                     <div class="row">
                         <div class="col-8">
@@ -132,13 +135,13 @@
             </div>
 
             <div class="col-md-6">
-                <div class="card p-4">
+                <div class="card shadow border-0  p-4">
                     <h4 class="card-title text-main fw-bold mb-3">المعلومات البنكية</h4>
                     <p class="fw-bold fs-5 py-2 mb-1">{{ $user->bank_name }}</p>
                     <p class="mb-1"><strong>رقم الحساب:</strong> {{ $user->bank_account_number }}</p>
                     <p class="mb-1"><strong>رقم الآيبان:</strong> {{ $user->iban }}</p>
-
-                    <h4 class="card-title text-main fw-bold mt-4 mb-3">الحساب المعتمد للتحصيل</h4>
+                    <hr class="text-main">
+                    <h4 class="card-title text-main fw-bold  mb-3">الحساب المعتمد للتحصيل</h4>
                     <p class="fw-bold fs-5 py-2 mb-1">بنك الراجحي</p>
                     <p class="mb-1"><strong>رقم الحساب:</strong> 3800010167519</p>
                     <p class="mb-1"><strong>رقم الآيبان:</strong> SA0380000000608010167519</p>
