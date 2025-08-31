@@ -169,14 +169,15 @@
                     </div> --}}
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="terms_agreed" name="terms_agreed" disabled>
-                        <label class="form-check-label" for="terms_agreed">
-                            <span>أوافق على الشروط والأحكام.</span>
+                        <label class="form-check-labels" for="terms_agreed">
+                            <span class=" text-dark">أوافق على شروط وأحكام اللائحة.</span>
                         </label>
                         <a href="#" class="btn btn-primary btn-lg my-1" data-bs-toggle="modal" data-bs-target="#termsModal">اللائحة المرفقة</a>.
                          @error('terms_agreed')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="mb-3 text-center fw-bold fs-3">غير مصرّح باستخدام اللائحة لصندوق آخر</div>
 
 
                     <button type="submit" id="submitForm" class="btn btn-primary btn-lg w-100" disabled onclick="this.preventDefault()">تسجيل</button>
