@@ -12,7 +12,7 @@
         </a>
     </li>
     <li class="nav-item mb-2">
-        <a href="{{ route('contributions.index') }}" class="nav-link text-white d-flex align-items-center">
+        <a href="{{ route('user.contributions') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-cash-stack ms-2"></i>
             مساهماتي
         </a>

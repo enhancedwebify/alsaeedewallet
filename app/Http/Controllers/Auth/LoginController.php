@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\LoanTier;
 use App\Models\ContributionApprovals;
 
 class LoginController extends Controller
@@ -60,29 +61,7 @@ class LoginController extends Controller
     }
     public function user_dashboard()
     {
-        // $requests = User::where('id_number',id_number())->with('loanTier')->first();
-        // return view('user.dashboard',compact('requests'));
-        // Fetch the user's data along with the loan tier relationship
-        $user = User::where('id_number', id_number())->with('approvals.loanTier')->first();
-        // $ca = ContributionApprovals::where('user_id',$user->id)->get();
-        // dump($user);
-        // 1. Calculate Total Contributions
-        // This assumes you have a 'contributions' relationship on your User model.
-        // Example: total_contributions = $user->contributions()->sum('amount');
-        $total_contributions = 50000; // Replace with your actual calculation
 
-        // 2. Calculate Available Loan Balance
-        // This logic depends on your loan management system.
-        // Example: available_loan_balance = calculate_available_loan_based_on_contributions($total_contributions);
-        $available_loan_balance = 30000; // Replace with your actual calculation
-
-        // 3. Calculate the Next Payment Amount (if any)
-        // This logic depends on your loan payment schedule.
-        // Example: next_payment_amount = $user->loans()->active()->first()->next_payment_amount;
-        $next_payment_amount = 1500; // Replace with your actual calculation
-
-        // Pass all the necessary variables to the dashboard view
-        return view('user.dashboard', compact('user', 'total_contributions', 'available_loan_balance', 'next_payment_amount'));
     }
 
     /**

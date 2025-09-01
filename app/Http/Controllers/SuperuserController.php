@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\ContributionApprovals;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Contribution; // Don't forget to import the Contribution model
 
 class SuperuserController extends Controller
 {
@@ -56,12 +57,16 @@ class SuperuserController extends Controller
         // Fetch the pending requests for the table
         $pendingApprovals = ContributionApprovals::with('user')->where('status', 'pending')->latest()->take(10)->get();
 
+        // Fetch the latest contributions for the contributions table
+        $latestContributions = Contribution::with('user')->latest()->take(10)->get();
+
         return view('superuser.dashboard', [
             'total_users' => $total_users,
             'pending_requests' => $pending_requests,
             'total_contributions' => $total_contributions,
             'total_loans' => $total_loans,
             'pendingApprovals' => $pendingApprovals,
+            'latestContributions' => $latestContributions,
         ]);
     }
 

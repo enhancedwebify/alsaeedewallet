@@ -1,6 +1,6 @@
 <ul class="nav flex-column mb-auto p-0">
     <li class="nav-item mb-2">
-        <a href="{{ route('admin.dashboard') }}" class="nav-link text-white d-flex align-items-center">
+        <a href="{{ route('superuser.dashboard') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-speedometer2 ms-2"></i>
             لوحة التحكم
         </a>

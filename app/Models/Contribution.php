@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-class LoanRepayment extends Model
+class Contribution extends Model
 {
     use HasFactory;
 
     protected $primaryKey = 'id';
-    protected $table = 'loan_repayments';
-
-    public function loan()
+    protected $table = 'contributions';
+    protected $guarded = [];
+    public function user()
     {
-        return $this->belongsTo(Loan::class);
+        return $this->belongsTo(User::class);
     }
 }

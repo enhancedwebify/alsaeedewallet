@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Contribution; // <-- ADD THIS LINE
 
 class User extends Authenticatable
 {
@@ -54,5 +55,21 @@ class User extends Authenticatable
     public function approvals()
     {
         return $this->hasMany(ContributionApprovals::class, 'user_id');
+    }
+    // User has many contributions
+    public function contributions()
+    {
+        return $this->hasMany(Contribution::class);
+    }
+    // User has many loans
+    public function loans()
+    {
+        return $this->hasMany(Loan::class);
+    }
+
+    // User can be a guarantor for many loans
+    public function guarantorsFor()
+    {
+        return $this->hasMany(Loan::class, 'guarantor_id');
     }
 }

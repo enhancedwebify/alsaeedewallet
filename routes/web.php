@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ContributionController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\UserDashboardController;
+
 
 Route::get('/terms-as-images', [App\Http\Controllers\DocumentsController::class, 'showTermsAsImages'])->name('terms.images');
 // This route will show the full page with the embedded PDF
@@ -28,6 +30,8 @@ Route::middleware(['auth', IsAdmin::class])->prefix('superuser')->group(function
     Route::post('/logout', [SuperuserController::class, 'logout'])->name('superuser.logout');
 });
 Route::middleware(['auth'])->group(function () {
+    Route::post('/user/new_loan', [UserDashboardController::class, 'store'])->name('user.newLoan');
+    Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
     // Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
     Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
     // Dummy routes for the sidebar links
@@ -46,6 +50,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transactions', function () {
         return view('user.transactions'); // A page for all transactions
     })->name('transactions.index');
+
+    // Route to show the form for adding a contribution
+    Route::get('/contributions/create', [ContributionController::class, 'create'])->name('contributions.create');
+    // Route to store the new contribution
+    Route::post('/contributions', [ContributionController::class, 'store'])->name('contributions.store');
+    // ... inside the user route group ...
+    Route::get('/contributions', [UserDashboardController::class, 'contributions'])->name('user.contributions');
+    // ... inside the user route group ...
+    Route::get('/loans/request', [UserDashboardController::class, 'showLoanRequestForm'])->name('user.loans.request');
+
+    // Route to handle loan request submission
+    Route::post('/loans/store', [UserDashboardController::class, 'storeLoanRequest'])->name('user.loans.store');
 });
 Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard Route
@@ -73,7 +89,6 @@ Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(
 });
 Route::post('/user/login', [LoginController::class, 'user_login'])->name('user.login');
 Route::get('/user/login', [LoginController::class, 'login_page'])->name('user.login.page');
-Route::get('/user/dashboard', [LoginController::class, 'user_dashboard'])->name('user.dashboard');
 Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 Route::get('/register', [RegistrationController::class, 'create'])->name('show.register');

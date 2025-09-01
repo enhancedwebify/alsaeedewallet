@@ -41,9 +41,19 @@
     @include('layout.sidebar')
     <div class="container mt-5">
         {{-- @include('layout.header') --}}
+        <!-- Modal Pos Opt. -->
+        @include('user.modals.modal',[
+            'modal_id' => 'newLoan',
+            'modal_title' => 'قرض جديد',
+            'modal_body' => 'newLoan',
+            'modal_parameters' => []
 
+        ])
         @if (session('success'))
             <div class="alert alert-success text-center">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-info text-center">{{ session('error') }}</div>
         @endif
 
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -52,31 +62,69 @@
         <div class="row mb-4">
             <div class="col-md-4">
                 <div class="card shadow border-0 p-4 text-center">
-                    <h5 class="card-title fw-bold">إجمالي المساهمات</h5>
+                    <h5 class="card-title fw-bold text-muted ">إجمالي المساهمات</h5>
                     <h2 class="card-text fw-bold text-main">{{ number_format($total_contributions ?? 0, 2) }} ريال</h2>
                     <p class="text-muted">آخر تحديث: اليوم</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            {{-- <div class="col-md-4">
                 <div class="card shadow border-0 p-4 text-center">
                     <h5 class="card-title fw-bold">الرصيد المتاح للقرض</h5>
                     <h2 class="card-text fw-bold">{{ number_format($available_loan_balance ?? 0, 2) }} ريال</h2>
                     <p class="text-muted">مبلغ قرضك الحالي</p>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-md-4">
                 <div class="card shadow border-0 p-4 text-center">
-                    <h5 class="card-title fw-bold">قسط الشهر القادم</h5>
+                    <h5 class="card-title fw-bold text-muted ">قسط الشهر القادم</h5>
                     <h2 class="card-text fw-bold text-main">{{ number_format($next_payment_amount ?? 0, 2) }} ريال</h2>
                     <p class="text-muted">تاريخ الاستحقاق: 15 أغسطس</p>
+                </div>
+            </div>
+             <div class="col-md-4">
+                <div class="card card-stats shadow border-0 p-4 text-center">
+                    {{-- <div class="card-body">
+                        <div class="rows">
+                            <div class="colss"> --}}
+                                <h5 class="card-title fw-bold text-uppercase text-muted ">القيمة القصوى للقرض</h5>
+                                <h2 class="card-text fw-bold text-main font-weight-bold ">
+                                    {{ number_format($available_loan_amount, 2) }} ريال
+                                </h2>
+                                <p class="text-muted">تاريخ الاستحقاق: 15 أغسطس</p>
+                            {{-- </div>
+                        </div>
+                    </div> --}}
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-stats shadow border-0 p-4 text-center">
+                    @if ($isLoanEligible)
+                        <h5 class="fw-bold text-success mb-3">أنت مؤهل لتقديم طلب قرض.</h5>
+                        <p>يمكنك الآن تقديم طلب قرض جديد من خلال الزر أدناه.</p>
+                        <a href="{{ route('user.loans.request') }}" class="btn btn-lg btn-success">
+                            تقديم طلب قرض
+                        </a>
+                    @else
+                        <h5 class="fw-bold text-muted mb-3">أنت غير مؤهل حاليًا لتقديم طلب قرض.</h5>
+                        <p class="text-muted">
+                            تتطلب اللائحة أن يكون العضو قد أتم سنة كاملة من المساهمات الشهرية.
+                            <br>
+                            متبقي لك {{ 12 - $user->contributions()->where('type', 'monthly_subscription')->count() }} شهر حتى تصبح مؤهلاً.
+                        </p>
+                    @endif
                 </div>
             </div>
         </div>
 
         <div class="row mb-4">
+
             <div class="col-md-4 mb-3">
                 <div class="card shadow border-0  p-4 h-100">
                     <h5 class="fw-bold">حالة الطلب</h5>
+                    @if (isset($user->approvals))
+
+
                     @foreach ($user->approvals as $approval)
 
                     <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
@@ -89,6 +137,7 @@
                     <p class="text-muted mt-2 mb-0">نحن نعمل على مراجعة طلبك وإعلامك بالنتيجة قريباً.</p>
                     @endif
                     @endforeach
+                    @endif
                 </div>
             </div>
             <div class="col-md-4 mb-3">
@@ -97,13 +146,49 @@
                         <a href="#" class="btn btn-lg btn-primary fw-bold m-2 w-100"  >
                             <i class="bi bi-wallet2"></i> إيداع مساهمة جديدة
                         </a>
-                        <a href="#" class="btn btn-lg btn-warning fw-bold m-2 w-100" style="background-color: #ffc800; border-color: #ffc800;">
-                            <i class="bi bi-cash-stack"></i> طلب قرض جديد
-                        </a>
-                        <a href="#" class="btn btn-lg btn-info fw-bold m-2 w-100" style="background-color: #17a2b8; border-color: #17a2b8;">
-                            <i class="bi bi-arrow-right-circle"></i> سداد قسط
+                        @php
+                          // Get the latest approval record for this user
+                            $latestApproval = $user->approvals()->latest()->first();
+                            $hide = '';
+                            // Now you can check if a record was found and access its properties
+                            if ($latestApproval) {
+                                if($latestApproval->status)
+                                    $hide = 'disabled';
+                            } else {
+                                echo "No approval found for this user.";
+                            }
+                        @endphp
+                        <a href="#" {{$hide}} class="btn btn-lg btn-warning fw-bold m-2 w-100"  data-bs-toggle="modal" data-bs-target="#newLoan" style="background-color: #ffc800; border-color: #ffc800;">
+                            <i class="bi bi-cash-stack"></i> رفع حد المساهمة
                         </a>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card shadow border-0  p-4 h-100">
+                    <h5 class="fw-bold">قروض</h5>
+                     @if ($isLoanEligible)
+                            <h5 class="fw-bold text-success mb-3">أنت مؤهل لتقديم طلب قرض.</h5>
+                            <p>يمكنك الآن تقديم طلب قرض جديد من خلال الزر أدناه.</p>
+                            <a href="{{ route('user.loans.request') }}" class="btn btn-lg btn-success">
+                                تقديم طلب قرض
+                            </a>
+
+                            {{-- IF has loan then will work on this button --}}
+                            <a href="#" class="btn btn-lg btn-info fw-bold my-2 w-100" style="background-color: #17a2b8; border-color: #17a2b8;">
+                                <i class="bi bi-arrow-right-circle"></i> سداد قسط
+                            </a>
+                        @else
+                            <h5 class="fw-bold text-muted mb-3">أنت غير مؤهل حاليًا لتقديم طلب قرض.</h5>
+                            <p>
+                                تتطلب اللائحة أن يكون العضو قد أتم سنة كاملة من المساهمات الشهرية.
+                                <br>
+                                متبقي لك {{ 12 - $user->contributions()->where('type', 'monthly_subscription')->count() }} شهر حتى تصبح مؤهلاً.
+                            </p>
+                        @endif
+                             {{-- <a href="{{ route('user.loans.request') }}" class="btn btn-lg btn-success">
+                                تقديم طلب قرض
+                            </a> --}}
                 </div>
             </div>
 

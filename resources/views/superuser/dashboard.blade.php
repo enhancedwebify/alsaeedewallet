@@ -187,8 +187,8 @@
                                         <tr>
                                             <td>{{ $request->user->full_name }}</td>
                                             <td>{{ str_replace(
-                                                    ['contribution'],
-                                                    ['مساهمة'],
+                                                    ['contribution','loan_request'],
+                                                    ['مساهمة','طلب قرض'],
                                                     $request->type) }}</td>
                                             <td>{{ $request->created_at->format('Y-m-d') }}</td>
                                             <td><span class="badge bg-warning text-dark">{{ str_replace(
@@ -202,6 +202,51 @@
                                         @empty
                                         <tr>
                                             <td colspan="5" class="text-center">لا توجد طلبات معلقة حاليًا.</td>
+                                        </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="card shadow border-0">
+                            <div class="card-header p-4 bg-transparent border-0 d-flex justify-content-between align-items-center">
+                                <h3 class="mb-0 fw-bold">آخر المساهمات المضافة</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-items-center table-flush">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" class="text-uppercase text-secondary">اسم المستخدم</th>
+                                            <th scope="col" class="text-uppercase text-secondary">المبلغ (ريال)</th>
+                                            <th scope="col" class="text-uppercase text-secondary">النوع</th>
+                                            <th scope="col" class="text-uppercase text-secondary">تاريخ المساهمة</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                        @forelse ($latestContributions as $contribution)
+                                        <tr>
+                                            <td>{{ $contribution->user?->full_name }}</td>
+                                            <td>{{ number_format($contribution->amount, 2) }}</td>
+                                            <td>
+                                                @if ($contribution->type == 'monthly_subscription')
+                                                    اشتراك شهري
+                                                @elseif ($contribution->type == 'joining_fee')
+                                                    رسوم انضمام
+                                                @elseif ($contribution->type == 'additional_contribution')
+                                                    مساهمة إضافية
+                                                @elseif ($contribution->type == 'loan_request')
+                                                    طلب قرض
+                                                @endif
+                                            </td>
+                                            <td>{{ $contribution->transaction_date }}</td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center">لا توجد مساهمات مسجلة حتى الآن.</td>
                                         </tr>
                                         @endforelse
                                     </tbody>
