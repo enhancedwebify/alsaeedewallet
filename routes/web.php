@@ -96,7 +96,7 @@ Route::post('/register', [RegistrationController::class, 'store'])->name('regist
 Route::get('/', function () {
     return view('index');
 });
-Route::get('/login', function () {
-    return view('login');
-});
+// Route::get('/login', function () {
+//     return view('login');
+// });
 

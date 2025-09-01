@@ -157,6 +157,15 @@
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input " onchange="document.querySelector('.terms_agreed').classList.toggle('d-none')" id="agree_no_illegal_use" name="agree_no_illegal_use" required>
+                        <label class="form-check-label" for="agree_no_illegal_use">
+                            <div class="mb-3 text-center fw-bold ">غير مصرّح باستخدام اللائحة لصندوق آخر</div>
+                        </label>
+                        @error('agree_no_illegal_use')
+                            <div class="text-danger mt-2">{{ $message }}</div>
+                        @enderror
+                    </div>
 
                     {{-- <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="terms_agreed" name="terms_agreed" required>
@@ -167,7 +176,7 @@
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div> --}}
-                    <div class="mb-3 form-check">
+                    <div class="mb-3 form-check d-none terms_agreed">
                         <input type="checkbox" class="form-check-input" id="terms_agreed" name="terms_agreed" disabled>
                         <label class="form-check-labels" for="terms_agreed">
                             <span class=" text-dark">أوافق على شروط وأحكام اللائحة.</span>
@@ -177,7 +186,7 @@
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-3 text-center fw-bold fs-3">غير مصرّح باستخدام اللائحة لصندوق آخر</div>
+
 
 
                     <button type="submit" id="submitForm" class="btn btn-primary btn-lg w-100" disabled onclick="this.preventDefault()">تسجيل</button>
