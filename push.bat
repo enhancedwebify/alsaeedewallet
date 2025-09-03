@@ -1,4 +1,4 @@
-@REM php artisan optimize
+php artisan optimize
 git add .
 git commit -m "Updates, some fixes."
 git push -u origin main
