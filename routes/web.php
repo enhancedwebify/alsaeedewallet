@@ -29,6 +29,8 @@ Route::middleware(['auth', IsAdmin::class])->prefix('superuser')->group(function
     Route::post('/approve/{user}', [SuperuserController::class, 'approveUser'])->name('superuser.approve');
     Route::post('/logout', [SuperuserController::class, 'logout'])->name('superuser.logout');
 });
+
+// USER LOGGED IN
 Route::middleware(['auth'])->group(function () {
     Route::post('/user/new_loan', [UserDashboardController::class, 'store'])->name('user.newLoan');
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
@@ -38,10 +40,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', function () {
         return view('user.profile'); // Assuming you will create a profile view
     })->name('user.profile');
-
-    Route::get('/contributions', function () {
-        return view('user.contributions'); // A page for contributions history
-    })->name('contributions.index');
 
     Route::get('/loans', function () {
         return view('user.loans'); // A page for loan details
