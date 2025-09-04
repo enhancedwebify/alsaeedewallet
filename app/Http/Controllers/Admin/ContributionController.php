@@ -61,8 +61,19 @@ class ContributionController extends Controller
     public function storeTierRequest(Request $request)
     {
         // $user = Auth::user();
-        $user = User::where('id_number', id_number())->with('contributions')->first();
+        $user = User::where('id_number', id_number())->with('loanTier')->get();
         // Check for existing pending requests of this type to prevent duplicates
+        // Get the monthly installment from the user's active loan tier
+        // If no tier is set, we can assume a default of 0.
+        dd($user);
+        $currentMonthlyContribution = $user->loanTier?->monthly_installment ?? 0;
+        // Check if the current monthly contribution is already 10,000 SAR or more
+        if ($currentMonthlyContribution >= 10000) {
+            return redirect()->back()->with('error', 'لا يمكن تقديم طلب لتغيير الشريحة. مساهمتك الشهرية الحالية هي الحد الأقصى المسموح به (10,000 ريال).');
+        }
+
+        // Check for existing pending requests of this type to prevent duplicates
+
         $hasPendingRequest = ContributionApprovals::where('user_id', $user->id)
                                                  ->where('type', 'tier_change_request')
                                                  ->where('status', 'pending')
@@ -80,18 +91,6 @@ class ContributionController extends Controller
         // Find the selected new tier
         $newTier = LoanTier::findOrFail($request->input('loan_tier_id'));
 
-        // Get the user's current monthly contribution amount.
-        // We assume the latest monthly subscription contribution reflects the current amount.
-        $currentMonthlyContribution = $user->contributions()->where('type', 'additional_contribution')->latest('transaction_date')->value('amount');
-
-        // Calculate the total monthly contribution after the change
-        $totalMonthlyContribution = $currentMonthlyContribution + $newTier->monthly_installment;
-
-        // Check against the 10,000 SAR limit
-        if ($totalMonthlyContribution > 10000) {
-            return redirect()->back()->with('error', 'إجمالي المساهمات الشهرية يتجاوز الحد الأقصى المسموح به (10,000 ريال).');
-        }
-
         // Create the new contribution approval record for the tier change
         ContributionApprovals::create([
             'user_id' => $user->id,
@@ -100,6 +99,7 @@ class ContributionController extends Controller
             'type' => 'tier_change_request',
             'notes' => 'طلب تغيير شريحة المساهمة إلى شريحة رقم ' . $newTier->tier_number,
         ]);
+
 
         return redirect()->back()->with('success', 'تم إرسال طلب تغيير الشريحة بنجاح. سيتم مراجعته من قبل الإدارة.');
     }

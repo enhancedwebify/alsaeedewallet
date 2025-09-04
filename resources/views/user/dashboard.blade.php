@@ -143,9 +143,9 @@
             <div class="col-md-4 mb-3">
                 <div class="card shadow border-0  p-4 h-100 d-flex flex-column justify-content-center">
                     <div class="d-flex justify-content-around flex-wrap">
-                        <a href="#" class="btn btn-lg btn-primary fw-bold m-2 w-100"  >
+                        {{-- <a href="#" class="btn btn-lg btn-primary fw-bold m-2 w-100"  >
                             <i class="bi bi-wallet2"></i> إيداع مساهمة جديدة
-                        </a>
+                        </a> --}}
                         @php
                           // Get the latest approval record for this user
                             $latestApproval = $user->approvals()->latest()->first();
