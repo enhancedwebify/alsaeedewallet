@@ -1,4 +1,4 @@
-<form action="{{route('user.newLoan')}}" method="POST">
+<form action="{{route('user.newTierRequest')}}" method="POST">
 @csrf
 <div class="modal-body" >
     <div class="container-fluid  mx-2 px-2">

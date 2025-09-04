@@ -56,6 +56,8 @@ Route::middleware(['auth'])->group(function () {
     // ... inside the user route group ...
     Route::get('/contributions', [UserDashboardController::class, 'contributions'])->name('user.contributions');
     // ... inside the user route group ...
+    Route::post('/contributions/tier-request', [ContributionController::class, 'storeTierRequest'])->name('user.newTierRequest');
+
     Route::get('/loans/request', [UserDashboardController::class, 'showLoanRequestForm'])->name('user.loans.request');
 
     // Route to handle loan request submission
