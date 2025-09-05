@@ -37,7 +37,7 @@
                         <a href="{{url('/')}}" class="btn btn-primary">رجوع <i class="bi bi-arrow-left"></i></a>
                     </div>
                     <div class="position-absolute w-100 d-flex justify-content-center" style="z-index: -1;top: 100px;">
-                        <div class="liquid_shape justify-content-center text-white" style="  display: flex;align-items: center;"> <div class="fw-bold h1 text-center">أهلا بعودتك،،،</div></div>
+                        <div class="liquid_shape justify-content-center text-white" style="  display: flex;align-items: center;"> <div class="fw-bold h1 text-center">مرحبا بالإدارة،،،</div></div>
                     </div>
                 </header>
                 <main class="pt-5 pb-3">
@@ -61,7 +61,7 @@
                             @if (session('success'))
                                 <div class="alert alert-success">{{ session('success') }}</div>
                             @endif
-                            <form action="{{route('superuser.login')}}" method="post">
+                            <form action="{{route('admin.login')}}" method="post">
                                 @csrf
                                 <div class="forminput">
 

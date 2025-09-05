@@ -14,6 +14,6 @@ class IsAdmin
             return $next($request);
         }
 
-        return redirect()->route('superuser.login');
+        return redirect()->route('admin.login');
     }
 }

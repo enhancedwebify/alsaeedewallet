@@ -21,8 +21,8 @@ Route::get('/terms', function () {
 Route::get('/terms-and-conditions', [App\Http\Controllers\DocumentsController::class, 'showTerms'])->name('terms.show');
 
 // Superuser login routes
-Route::get('/superuser/login', [SuperuserController::class, 'showLoginForm'])->name('superuser.login');
-Route::post('/superuser/login', [SuperuserController::class, 'login']);
+// Route::get('/superuser/login', [SuperuserController::class, 'showLoginForm'])->name('superuser.login');
+// Route::post('/superuser/login', [SuperuserController::class, 'login']);
 
 // Superuser protected routes
 Route::middleware(['auth', IsAdmin::class])->prefix('superuser')->group(function () {
@@ -66,6 +66,9 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 
 // ADMIN | SUPERUSER ROUTES
 Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [SuperuserController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [SuperuserController::class, 'login']);
+
     // Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route to show the form for adding a contribution
@@ -100,8 +103,8 @@ Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(
 
 Route::post('/user/login', [LoginController::class, 'user_login'])->name('user.login');
 Route::get('/user/login', [LoginController::class, 'login_page'])->name('user.login.page');
-Route::get('/login', [LoginController::class, 'create'])->name('login');
-Route::post('/login', [LoginController::class, 'store']);
+// Route::get('/login', [LoginController::class, 'create'])->name('login');
+// Route::post('/login', [LoginController::class, 'store']);
 Route::get('/register', [RegistrationController::class, 'create'])->name('show.register');
 Route::post('/register', [RegistrationController::class, 'store'])->name('register');
 Route::get('/', function () {

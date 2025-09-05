@@ -125,24 +125,24 @@
                     @if (isset($user->approvals))
 
 
-                    @foreach ($user->approvals as $approval)
+                        @foreach ($user->approvals as $approval)
 
-                    <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
-                    @if ($approval->status =='approved')
-                            <span class="badge bg-main text-white py-2 px-3 fw-normal fs-6">تمت الموافقة على حسابك</span>
-                    @elseif($approval->status =='rejected')
-                        <span class="badge alert alert-danger text-dark py-2 px-3 fw-normal fs-6">{{$approval->notes}}</span>
-                    @else
-                    <span class="badge bg-warning text-dark py-2 px-3 fw-normal fs-6">طلبك قيد المراجعة</span>
-                    <p class="text-muted mt-2 mb-0">نحن نعمل على مراجعة طلبك وإعلامك بالنتيجة قريباً.</p>
-                    @endif
-                    @endforeach
+                            <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
+                            @if ($approval->status =='approved')
+                                    <span class="badge bg-main text-white py-2 px-3 fw-normal fs-6">نشط</span>
+                            @elseif($approval->status =='rejected')
+                                <span class="badge alert alert-danger text-dark py-2 px-3 fw-normal fs-6">{{$approval->notes}}</span>
+                            @else
+                            <span class="badge bg-warning text-dark py-2 px-3 fw-normal fs-6">طلبك قيد المراجعة</span>
+                            <p class="text-muted mt-2 mb-0">نحن نعمل على مراجعة طلبك وإعلامك بالنتيجة قريباً.</p>
+                            @endif
+                        @endforeach
                     @endif
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="card shadow border-0  p-4 h-100 d-flex flex-column justify-content-center">
-                    <div class="d-flex justify-content-around flex-wrap">
+                <div class="card shadow border-0  p-4s h-100 d-flex flex-column justify-content-center">
+                    <div class="d-flexs justify-content-around m-0 p-0 flex-wraps " style="height: 100%;display: table;">
                         {{-- <a href="#" class="btn btn-lg btn-primary fw-bold m-2 w-100"  >
                             <i class="bi bi-wallet2"></i> إيداع مساهمة جديدة
                         </a> --}}
@@ -158,8 +158,8 @@
                                 echo "No approval found for this user.";
                             }
                         @endphp
-                        <a href="#" {{$hide}} class="btn btn-lg btn-primary fw-bold m-2 w-100"  data-bs-toggle="modal" data-bs-target="#newLoan" >
-                            <i class="bi bi-cash-stack"></i> تغيير شريحة المساهمة
+                        <a href="#" {{$hide}} class="btn btn-lg btn-primary fw-bold  w-100" style="height:100%; display: table-cell;"  data-bs-toggle="modal" data-bs-target="#newLoan" >
+                            <i class="bi bi-cash-stack"></i>  طلب تغيير شريحة المساهمة
                         </a>
                     </div>
                 </div>

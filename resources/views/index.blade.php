@@ -182,7 +182,7 @@
                         <p class="text-dark">تتبع مساهماتك وانشاء الطلبات.</p>
                     </div>
                 </a>
-                <a href="{{route('superuser.login')}}" class="col-md-6 text-decoration-none" data-aos="fade-up" data-aos-delay="200">
+                <a href="{{route('admin.login')}}" class="col-md-6 text-decoration-none" data-aos="fade-up" data-aos-delay="200">
                     <div class="feature-card bg-main-light shadow-md">
                         <i class="bi bi-person feature-icon"></i>
                         <h4 class="mt-3">دخول المدراء</h4>
