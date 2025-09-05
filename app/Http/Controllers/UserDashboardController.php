@@ -42,16 +42,21 @@ class UserDashboardController extends Controller
         // This logic depends on your loan payment schedule.
         // Example: next_payment_amount = $user->loans()->active()->first()->next_payment_amount;
         $next_payment_amount = 0; // Replace with your actual calculation
+        $pending_for_approval = 0;
         foreach ($user->approvals as $approval){
-            if ($approval->status =='approved')
+            if ($approval->status =='approved'){
                 $next_payment_amount = $approval->loanTier->contribution_amount; // Replace with your actual calculation
+            }elseif($approval->status =='pending'){
+                $pending_for_approval ++;
+            }
+
         }
 
 
         // Pass all the necessary variables to the dashboard view
         $isLoanEligible = $this->isLoanEligible(); // Call the new method
 
-        return view('user.dashboard', compact('user', 'total_contributions', 'available_loan_balance', 'available_loan_amount', 'next_payment_amount','loan_tiers', 'isLoanEligible'));
+        return view('user.dashboard', compact('user', 'total_contributions', 'available_loan_balance', 'available_loan_amount', 'next_payment_amount','loan_tiers', 'isLoanEligible','pending_for_approval'));
     }
 
     /**

@@ -117,30 +117,76 @@
             </div>
         </div>
 
+        <div class="row mb-4 mx-1">
+            <div class="card card-custom shadow border-0  p-0 h-100 d-flex flex-column justify-content-center">
+                <div class="d-flexs justify-content-around m-0 p-0 flex-wraps " style="height: 100%;display: table;">
+                    {{-- <a href="#" class="btn btn-lg btn-primary fw-bold m-2 w-100"  >
+                        <i class="bi bi-wallet2"></i> إيداع مساهمة جديدة
+                    </a> --}}
+                    @php
+                        // Get the latest approval record for this user
+                        $latestApproval = $user->approvals()->latest()->first();
+                        $hide = '';
+                        // Now you can check if a record was found and access its properties
+                        if ($latestApproval) {
+                            if($latestApproval->status)
+                                $hide = 'disabled';
+                        } else {
+                            echo "No approval found for this user.";
+                        }
+                    @endphp
+                    {{-- @if ($pending_for_approval>0)
+
+                        <a href="#" {{$hide}} class="text-center text-decoration-none alert alert-info fw-bold  w-100" style="height:100%; display: table-cell;vertical-align:middle" >
+                            <i class="bi bi-cash-stack"></i>  تم تقديم طلب تغيير شريحة المساهمة
+                        </a>
+                    @else
+                    @endif --}}
+                    <a href="#" {{$hide}} class="btn btn-lg btn-primary fw-normal  w-100" style="height:100%; display: table-cell;"  data-bs-toggle="modal" data-bs-target="#newLoan" >
+                        <i class="bi bi-cash-stack"></i>  طلب تغيير شريحة المساهمة
+                    </a>
+                </div>
+            </div>
+        </div>
         <div class="row mb-4">
 
             <div class="col-md-4 mb-3">
                 <div class="card shadow border-0  p-4 h-100">
                     <h5 class="fw-bold">حالة الطلب</h5>
+                    @php
+                        $lastRow = null; // Initialize a variable to store the last row
+
+                        // Loop through the data
+                        foreach ($user->approvals as $row) {
+                            // In a real database scenario, this would be:
+                            // while ($row = mysqli_fetch_assoc($result)) {
+
+                            // Store the current row in $lastRow in each iteration
+                            $lastRow = $row;
+                        }
+                        // echo $lastRow;
+                    @endphp
                     @if (isset($user->approvals))
 
-
+                        {{-- @dump(($user->approvals->last())) --}}
                         @foreach ($user->approvals as $approval)
-
-                            <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
-                            @if ($approval->status =='approved')
-                                    <span class="badge bg-main text-white py-2 px-3 fw-normal fs-6">نشط</span>
-                            @elseif($approval->status =='rejected')
-                                <span class="badge alert alert-danger text-dark py-2 px-3 fw-normal fs-6">{{$approval->notes}}</span>
-                            @else
-                            <span class="badge bg-warning text-dark py-2 px-3 fw-normal fs-6">طلبك قيد المراجعة</span>
-                            <p class="text-muted mt-2 mb-0">نحن نعمل على مراجعة طلبك وإعلامك بالنتيجة قريباً.</p>
+                            @if ($lastRow !== null)
+                                <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
+                                @if ($approval->status =='approved')
+                                        <span class="badge bg-main text-white py-2 px-3 fw-normal fs-6">نشط</span>
+                                @elseif($approval->status =='rejected')
+                                    <span class="badge alert alert-danger text-dark py-2 px-3 fw-normal fs-6">{{$approval->notes}}</span>
+                                @else
+                                <span class="badge bg-warning text-dark py-2 px-3 fw-normal fs-6">طلبك قيد المراجعة</span>
+                                <p class="text-muted mt-2 mb-0">نحن نعمل على مراجعة طلبك وإعلامك بالنتيجة قريباً.</p>
+                                @endif
                             @endif
+
                         @endforeach
                     @endif
                 </div>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3" hidden>
                 <div class="card shadow border-0  p-4s h-100 d-flex flex-column justify-content-center">
                     <div class="d-flexs justify-content-around m-0 p-0 flex-wraps " style="height: 100%;display: table;">
                         {{-- <a href="#" class="btn btn-lg btn-primary fw-bold m-2 w-100"  >
@@ -158,9 +204,16 @@
                                 echo "No approval found for this user.";
                             }
                         @endphp
-                        <a href="#" {{$hide}} class="btn btn-lg btn-primary fw-bold  w-100" style="height:100%; display: table-cell;"  data-bs-toggle="modal" data-bs-target="#newLoan" >
-                            <i class="bi bi-cash-stack"></i>  طلب تغيير شريحة المساهمة
-                        </a>
+                        @if ($pending_for_approval>0)
+
+                            <a href="#" {{$hide}} class="text-center text-decoration-none alert alert-info fw-bold  w-100" style="height:100%; display: table-cell;vertical-align:middle" >
+                                <i class="bi bi-cash-stack"></i>  تم تقديم طلب تغيير شريحة المساهمة
+                            </a>
+                        @else
+                            <a href="#" {{$hide}} class="btn btn-lg btn-primary fw-bold  w-100" style="height:100%; display: table-cell;"  data-bs-toggle="modal" data-bs-target="#newLoan" >
+                                <i class="bi bi-cash-stack"></i>  طلب تغيير شريحة المساهمة
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -168,14 +221,14 @@
                 <div class="card shadow border-0  p-4 h-100">
                     <h5 class="fw-bold">قروض</h5>
                      @if ($isLoanEligible)
-                            <h5 class="fw-bold text-main mb-3">أنت مؤهل لتقديم طلب قرض.</h5>
+                            <h5 class="fw-bolds text-main mb-3">أنت مؤهل لتقديم طلب قرض.</h5>
                             <p>يمكنك الآن تقديم طلب قرض جديد من خلال الزر أدناه.</p>
                             <a href="{{ route('user.loans.request') }}" class="btn btn-lg btn-primary">
                                 تقديم طلب قرض
                             </a>
 
                             {{-- IF has loan then will work on this button --}}
-                            <a href="#" class="btn btn-lg btn-outline-primary fw-bold my-2 w-100">
+                            <a href="#" class="btn btn-lg btn-outline-primary my-2 w-100">
                                 <i class="bi bi-arrow-right-circle"></i> سداد قسط
                             </a>
                         @else
