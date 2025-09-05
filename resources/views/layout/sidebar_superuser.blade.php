@@ -8,7 +8,7 @@
     @include('layout._nav_links_superuser')
     <div class="mt-auto px-3 ">
         <hr class="border-secondary">
-        <a href="{{ route('logout') }}" class="nav-link  text-white d-flex align-items-center">
+        <a href="{{ route('admin.logout') }}" class="nav-link  text-white d-flex align-items-center">
             <i class="bi bi-box-arrow-right ms-2"></i>
             تسجيل الخروج
         </a>
@@ -34,7 +34,7 @@
     @include('layout._nav_links_superuser')
     <div class="mt-auto px-3">
         <hr class="border-secondary">
-        <a href="{{ route('logout') }}" class="nav-link text-white d-flex align-items-center">
+        <a href="{{ route('admin.logout') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-box-arrow-right me-2"></i>
             تسجيل الخروج
         </a>

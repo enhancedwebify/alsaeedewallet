@@ -23,6 +23,9 @@ class LoginController extends Controller
      */
     public function login_page()
     {
+        if(id_number()){
+            return redirect()->route('user.dashboard');
+        }
         return view('user/login');
     }
     public function user_login(Request $request)

@@ -18,13 +18,13 @@
         </a>
     </li>
     <li class="nav-item mb-2">
-        <a href="{{ route('loans.index') }}" class="nav-link text-white d-flex align-items-center">
+        <a href="{{ route('user.loans.index') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-arrow-down-up ms-2"></i>
             قروضي
         </a>
     </li>
     <li class="nav-item mb-2">
-        <a href="{{ route('transactions.index') }}" class="nav-link text-white d-flex align-items-center">
+        <a href="{{ route('user.transactions.index') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-card-list ms-2"></i>
             سجل العمليات
         </a>

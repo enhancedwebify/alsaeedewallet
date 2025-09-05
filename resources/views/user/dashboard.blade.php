@@ -53,7 +53,7 @@
             <div class="alert alert-success text-center">{{ session('success') }}</div>
         @endif
         @if (session('error'))
-            <div class="alert alert-info text-center">{{ session('error') }}</div>
+            <div class="alert alert-danger text-center">{{ session('error') }}</div>
         @endif
 
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -100,9 +100,9 @@
             <div class="col-md-4">
                 <div class="card card-stats shadow border-0 p-4 text-center">
                     @if ($isLoanEligible)
-                        <h5 class="fw-bold text-success mb-3">أنت مؤهل لتقديم طلب قرض.</h5>
+                        <h5 class="fw-bold text-main mb-3">أنت مؤهل لتقديم طلب قرض.</h5>
                         <p>يمكنك الآن تقديم طلب قرض جديد من خلال الزر أدناه.</p>
-                        <a href="{{ route('user.loans.request') }}" class="btn btn-lg btn-success">
+                        <a href="{{ route('user.loans.request') }}" class="btn btn-lg btn-primary">
                             تقديم طلب قرض
                         </a>
                     @else
@@ -110,7 +110,7 @@
                         <p class="text-muted">
                             تتطلب اللائحة أن يكون العضو قد أتم سنة كاملة من المساهمات الشهرية.
                             <br>
-                            متبقي لك {{ 12 - $user->contributions()->where('type', 'monthly_subscription')->count() }} شهر حتى تصبح مؤهلاً.
+                            متبقي لك {{ 12 - $user->contributions()->where('type', 'contributions')->count() }} شهر حتى تصبح مؤهلاً.
                         </p>
                     @endif
                 </div>
@@ -129,7 +129,7 @@
 
                     <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
                     @if ($approval->status =='approved')
-                            <span class="badge bg-success py-2 px-3 fw-normal fs-6">تمت الموافقة على حسابك</span>
+                            <span class="badge bg-main text-white py-2 px-3 fw-normal fs-6">تمت الموافقة على حسابك</span>
                     @elseif($approval->status =='rejected')
                         <span class="badge alert alert-danger text-dark py-2 px-3 fw-normal fs-6">{{$approval->notes}}</span>
                     @else
@@ -158,8 +158,8 @@
                                 echo "No approval found for this user.";
                             }
                         @endphp
-                        <a href="#" {{$hide}} class="btn btn-lg btn-warning fw-bold m-2 w-100"  data-bs-toggle="modal" data-bs-target="#newLoan" style="background-color: #ffc800; border-color: #ffc800;">
-                            <i class="bi bi-cash-stack"></i> رفع حد المساهمة
+                        <a href="#" {{$hide}} class="btn btn-lg btn-primary fw-bold m-2 w-100"  data-bs-toggle="modal" data-bs-target="#newLoan" >
+                            <i class="bi bi-cash-stack"></i> تغيير شريحة المساهمة
                         </a>
                     </div>
                 </div>
@@ -168,14 +168,14 @@
                 <div class="card shadow border-0  p-4 h-100">
                     <h5 class="fw-bold">قروض</h5>
                      @if ($isLoanEligible)
-                            <h5 class="fw-bold text-success mb-3">أنت مؤهل لتقديم طلب قرض.</h5>
+                            <h5 class="fw-bold text-main mb-3">أنت مؤهل لتقديم طلب قرض.</h5>
                             <p>يمكنك الآن تقديم طلب قرض جديد من خلال الزر أدناه.</p>
-                            <a href="{{ route('user.loans.request') }}" class="btn btn-lg btn-success">
+                            <a href="{{ route('user.loans.request') }}" class="btn btn-lg btn-primary">
                                 تقديم طلب قرض
                             </a>
 
                             {{-- IF has loan then will work on this button --}}
-                            <a href="#" class="btn btn-lg btn-info fw-bold my-2 w-100" style="background-color: #17a2b8; border-color: #17a2b8;">
+                            <a href="#" class="btn btn-lg btn-outline-primary fw-bold my-2 w-100">
                                 <i class="bi bi-arrow-right-circle"></i> سداد قسط
                             </a>
                         @else

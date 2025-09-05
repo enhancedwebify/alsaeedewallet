@@ -71,8 +71,8 @@
                                         <tr>
                                             <td>{{ number_format($contribution->amount, 2) }}</td>
                                             <td>
-                                                @if ($contribution->type == 'monthly_subscription')
-                                                    اشتراك شهري
+                                                @if ($contribution->type == 'contribution')
+                                                    مساهمة شهرية
                                                 @elseif ($contribution->type == 'joining_fee')
                                                     رسوم انضمام
                                                 @elseif ($contribution->type == 'additional_contribution')

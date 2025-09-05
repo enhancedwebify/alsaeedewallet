@@ -86,7 +86,7 @@ class UserDashboardController extends Controller
     {
         // Get the authenticated user with their contributions, ordered by the latest
         // $user = Auth::user()->load('contributions');
-        $user = User::where('id_number', id_number())->with('contributions')->first();
+        $user = User::where('id_number', id_number())->with('contributions')->orderByDesc('id')->first();
         $contributions = $user->contributions;
         return view('user.contributions.index', compact('contributions'));
     }

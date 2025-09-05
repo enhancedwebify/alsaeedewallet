@@ -187,8 +187,8 @@
                                         <tr>
                                             <td>{{ $request->user->full_name }}</td>
                                             <td>{{ str_replace(
-                                                    ['contribution','loan_request'],
-                                                    ['مساهمة','طلب قرض'],
+                                                    ['contribution','loan_request','tier_change_request'],
+                                                    ['مساهمة','طلب قرض','طلب تغيير شريحة مساهمة'],
                                                     $request->type) }}</td>
                                             <td>{{ $request->created_at->format('Y-m-d') }}</td>
                                             <td><span class="badge bg-warning text-dark">{{ str_replace(
@@ -238,6 +238,8 @@
                                                     رسوم انضمام
                                                 @elseif ($contribution->type == 'additional_contribution')
                                                     مساهمة إضافية
+                                                @elseif ($contribution->type == 'contribution')
+                                                    مساهمة شهرية
                                                 @elseif ($contribution->type == 'loan_request')
                                                     طلب قرض
                                                 @endif
