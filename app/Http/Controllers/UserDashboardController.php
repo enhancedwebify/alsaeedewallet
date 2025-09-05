@@ -41,7 +41,12 @@ class UserDashboardController extends Controller
         // 3. Calculate the Next Payment Amount (if any)
         // This logic depends on your loan payment schedule.
         // Example: next_payment_amount = $user->loans()->active()->first()->next_payment_amount;
-        $next_payment_amount = 1500; // Replace with your actual calculation
+        $next_payment_amount = 0; // Replace with your actual calculation
+        foreach ($user->approvals as $approval){
+            if ($approval->status =='approved')
+                $next_payment_amount = $approval->loanTier->contribution_amount; // Replace with your actual calculation
+        }
+
 
         // Pass all the necessary variables to the dashboard view
         $isLoanEligible = $this->isLoanEligible(); // Call the new method
