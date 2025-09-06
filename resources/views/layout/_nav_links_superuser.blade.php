@@ -24,6 +24,12 @@
         </a>
     </li>
     <li class="nav-item mb-2">
+        <a href="{{ route('admin.contributions.uploads') }}" class="nav-link text-white d-flex align-items-center">
+            <i class="bi bi-cash-stack ms-2"></i>
+            رفع المساهمات
+        </a>
+    </li>
+    <li class="nav-item mb-2">
         <a href="{{ route('admin.loans.index') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-arrow-down-up ms-2"></i>
             إدارة القروض

@@ -32,6 +32,15 @@ class ContributionController extends Controller
         $users = User::all();
         return view('admin.contributions.create', compact('users'));
     }
+    /**
+     * Show the form for uploading a bank statement file.
+     */
+    public function showUploadForms()
+    {
+        // echo "dd";
+        echo 'www';
+        return view('admin.contributions.upload');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -104,14 +113,6 @@ class ContributionController extends Controller
 
 
         return redirect()->back()->with('success', 'تم إرسال طلب تغيير الشريحة بنجاح. سيتم مراجعته من قبل الإدارة.');
-    }
-     /**
-     * Show the form for uploading a bank statement file.
-     */
-    public function showUploadForm()
-    {
-        // echo "dd";
-        return view('admin.contributions.upload');
     }
 
     /**

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" dir="rtl">
     <head>
-        <title>دخول</title>
+        <title>دخول المدراء</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta

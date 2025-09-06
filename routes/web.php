@@ -15,9 +15,11 @@ use App\Http\Controllers\UserDashboardController;
 
 Route::get('/terms-as-images', [App\Http\Controllers\DocumentsController::class, 'showTermsAsImages'])->name('terms.images');
 // This route will show the full page with the embedded PDF
+
 Route::get('/terms', function () {
     return view('terms');
 })->name('terms.page');
+
 Route::get('/terms-and-conditions', [App\Http\Controllers\DocumentsController::class, 'showTerms'])->name('terms.show');
 
 // Superuser login routes
@@ -50,7 +52,6 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
         return view('transactions'); // A page for all transactions
     })->name('transactions.index');
 
-
     // Route to store the new contribution
     Route::post('/contributions', [ContributionController::class, 'store'])->name('contributions.store');
     // ... inside the user route group ...
@@ -65,9 +66,9 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 });
 
 // ADMIN | SUPERUSER ROUTES
+Route::get('/login', [SuperuserController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/login', [SuperuserController::class, 'login']);
 Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/login', [SuperuserController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [SuperuserController::class, 'login']);
 
     // Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -94,7 +95,7 @@ Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
 
     // Show the form for uploading bank statements
-    Route::get('/contributions/upload', [ContributionController::class, 'showUploadForm'])->name('contributions.upload');
+    Route::get('/contributions/upload', [ContributionController::class, 'showUploadForms'])->name('contributions.uploads');
 
     // Process the uploaded bank statement
     Route::post('/contributions/import', [ContributionController::class, 'import'])->name('contributions.import');
