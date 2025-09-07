@@ -155,22 +155,18 @@
                     <h5 class="fw-bold">حالة الطلب</h5>
                     @php
                         $lastRow = null; // Initialize a variable to store the last row
+                        $r = count($user->approvals);
 
-                        // Loop through the data
-                        foreach ($user->approvals as $row) {
-                            // In a real database scenario, this would be:
-                            // while ($row = mysqli_fetch_assoc($result)) {
-
-                            // Store the current row in $lastRow in each iteration
-                            $lastRow = $row;
-                        }
-                        // echo $lastRow;
                     @endphp
                     @if (isset($user->approvals))
 
                         {{-- @dump(($user->approvals->last())) --}}
                         @foreach ($user->approvals as $approval)
-                            @if ($lastRow !== null)
+                            @php
+                                $r--;
+                                $lastRow = $r;
+                            @endphp
+                            @if ($lastRow >= 0)
                                 <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
                                 @if ($approval->status =='approved')
                                         <span class="badge bg-main text-white py-2 px-3 fw-normal fs-6">نشط</span>

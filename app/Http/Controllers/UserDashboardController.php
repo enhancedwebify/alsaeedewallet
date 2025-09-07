@@ -43,7 +43,12 @@ class UserDashboardController extends Controller
         // Example: next_payment_amount = $user->loans()->active()->first()->next_payment_amount;
         $next_payment_amount = 0; // Replace with your actual calculation
         $pending_for_approval = 0;
+        $lastRow = null; // Initialize a variable to store the last row
+        // $r = count($user->approvals);
+        // $r--;
+
         foreach ($user->approvals as $approval){
+
             if ($approval->status =='approved'){
                 $next_payment_amount = $approval->loanTier->contribution_amount; // Replace with your actual calculation
             }elseif($approval->status =='pending'){

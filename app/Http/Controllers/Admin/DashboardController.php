@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LoanTier; // Don't forget to import the LoanTier model
+use App\Models\Loan; // Don't forget to import the LoanTier model
+use App\Models\User; // Don't forget to import the LoanTier model
 use App\Models\ContributionApprovals; // Don't forget to import the LoanTier model
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -13,17 +16,130 @@ class DashboardController extends Controller
     public function showApproval($id)
     {
         // Find the approval request by its ID and eagerly load the related user data
-        $approval = ContributionApprovals::with('user')->findOrFail($id);
+        $approval = ContributionApprovals::with(['user', 'loanTier'])->findOrFail($id);
+        $isGuarantorRequired = false;
 
+        // This logic only applies to loan requests
+        if ($approval->type === 'loan_request') {
+            // Calculate the user's total contributions
+            $totalContributions = $approval->user->contributions()->sum('amount');
+
+            // Get the requested loan amount (using the min as a default)
+            $requestedLoanAmount = $approval->loanTier->loan_amount_min;
+
+            // Determine if a guarantor is required based on the legal document's rule
+            if ($requestedLoanAmount > $totalContributions) {
+                $isGuarantorRequired = true;
+            }
+        }
+
+        // Pass all users to the view for the guarantor dropdown
+        $allUsers = User::all();
         // Get all available loan tiers to display in the approval form
         $loanTiers = LoanTier::all();
 
-        return view('admin.approvals.show', compact('approval', 'loanTiers'));
+        // This is a temporary line to help us debug
+        if($approval->type === 'loan_request'){
+            dump([
+                'requested_loan_amount' => $requestedLoanAmount,
+                'total_contributions' => $totalContributions,
+                'is_guarantor_required' => $isGuarantorRequired,
+            ]);
+            return view('admin.approvals.show1', compact('approval', 'loanTiers','isGuarantorRequired', 'allUsers'));
+        }elseif($approval->type === 'contribution'){
+            return view('admin.approvals.show1', compact('approval', 'loanTiers'));
+
+        }
+    }
+     /**
+     * Process an approval request (approve/reject).
+     */
+    public function processApproval(Request $request, $id)
+    {
+        $approval = ContributionApprovals::findOrFail($id);
+
+        // Prevent processing an already processed request
+        if ($approval->status !== 'pending') {
+            return redirect()->route('admin.dashboard')->with('error', 'تمت معالجة هذا الطلب بالفعل.');
+        }
+// dd('ss');
+        // Validate the admin's action and guarantor for loan requests
+        $request->validate([
+            'action' => 'required|in:approve,reject',
+            // 'guarantor_id' => 'required_if:action,approve|exists:users,id', // Required only for loan approval
+        ]);
+
+        $action = $request->input('action');
+
+        DB::beginTransaction();
+
+        try {
+            if ($action === 'approve') {
+                if ($approval->type === 'loan_request') {
+                    // Get the loan tier details
+                    $loanTier = $approval->loanTier;
+
+                    // The legal document states a specific loan amount based on contributions.
+                    // Let's assume for this code that the loan amount is the minimum of the tier for now.
+                    // A more advanced system would allow the admin to specify the exact amount within the range.
+                    $loanAmount = $loanTier->loan_amount_min;
+
+                    // Create a new loan record
+                    Loan::create([
+                        'user_id' => $approval->user_id,
+                        'loan_tier_id' => $approval->loan_tier_id,
+                        'guarantor_id' => $request->input('guarantor_id'),
+                        'loan_amount' => $loanAmount,
+                        'outstanding_balance' => $loanAmount,
+                        'is_approved' => true,
+                        'monthly_payment' => $loanTier->monthly_payment_amount,
+                        'loan_date' => now(),
+                    ]);
+
+                    // Update the user's loan_tier_id to reflect the new approved tier
+                    $approval->user->update(['loan_tier_id' => $approval->loan_tier_id]);
+
+                    // Update the approval status
+                    $approval->update(['status' => 'approved']);
+
+                    $message = 'تمت الموافقة على طلب القرض بنجاح.';
+
+                } elseif ($approval->type === 'tier_change_request') {
+                    // Update the user's loan_tier_id to reflect the new tier
+                    $approval->user->update(['loan_tier_id' => $approval->loan_tier_id]);
+
+                    // Update the approval status
+                    $approval->update(['status' => 'approved']);
+
+                    $message = 'تمت الموافقة على طلب تغيير الشريحة بنجاح.';
+                } elseif ($approval->type === 'contribution') {
+                    // Update the user's loan_tier_id to reflect the new tier
+                    $approval->user->update(['loan_tier_id' => $approval->loan_tier_id,'is_approved' => 1]);
+
+                    // Update the approval status
+                    $approval->update(['status' => 'approved','notes' => $request->input('notes')]);
+
+                    $message = 'تمت الموافقة على طلب المساهمة بنجاح.';
+                }
+
+            } elseif ($action === 'reject') {
+                $approval->update(['status' => 'rejected']);
+                $message = 'تم رفض الطلب بنجاح.';
+            }
+
+            DB::commit();
+            return redirect()->route('superuser.dashboard')->with('success', $message);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'حدث خطأ: ' . $e->getMessage());
+        }
     }
      /**
      * Process an approval or rejection request.
      */
-    public function processApproval(Request $request, $id)
+    public function processApproval1(Request $request, $id)
     {
         $approval = ContributionApprovals::findOrFail($id);
 

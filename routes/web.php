@@ -37,8 +37,8 @@ Route::middleware(['auth', IsAdmin::class])->prefix('superuser')->group(function
 Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::post('/new_loan', [UserDashboardController::class, 'store'])->name('newLoan');
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-    // Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
     Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
+    // Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
     // Dummy routes for the sidebar links
     Route::get('/profile', function () {
         return view('profile'); // Assuming you will create a profile view
@@ -69,7 +69,6 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 Route::get('/login', [SuperuserController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/login', [SuperuserController::class, 'login']);
 Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(function () {
-
     // Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route to show the form for adding a contribution
