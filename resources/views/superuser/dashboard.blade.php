@@ -79,7 +79,7 @@
 <body>
     {{-- This is the main container for the dashboard. It will house the sidebar and the content. --}}
     @include('layout.sidebar_superuser')
-    <div class="container mt-5">
+    <div class="container mt-2">
 
         {{-- The Admin Sidebar --}}
         {{-- You may need to create a separate sidebar file for admin navigation links --}}
@@ -158,7 +158,7 @@
                     <div class="col-12">
                         <div class="card shadow border-0">
                             <div class="card-header p-4 bg-transparent border-0 d-flex justify-content-between align-items-center">
-                                <h3 class="mb-0 fw-bold">طلبات الموافقة الأخيرة</h3>
+                                <h3 class="mb-0 text-main fw-bold">طلبات الموافقة الأخيرة</h3>
                                 <a href="#" class="btn btn-sm btn-primary">عرض الكل</a>
                             </div>
                             <div class="table-responsive">
