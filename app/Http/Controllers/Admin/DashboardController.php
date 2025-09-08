@@ -189,7 +189,7 @@ class DashboardController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('superuser.dashboard')->with('success', $message);
+            return redirect()->route('admin.dashboard')->with('success', $message);
 
         } catch (\Exception $e) {
             DB::rollBack();
