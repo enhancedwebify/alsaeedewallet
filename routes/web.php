@@ -78,6 +78,7 @@ Route::get('/login', [SuperuserController::class, 'showLoginForm'])->name('admin
 Route::post('/login', [SuperuserController::class, 'login']);
 Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(function () {
      // User Management Routes
+    Route::resource('users', UserController::class);
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
@@ -107,7 +108,7 @@ Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/approvals/{id}', [DashboardController::class, 'showApproval'])->name('approvals.show');
     Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
     // User Management Routes
-    Route::resource('users', UserController::class);
+
 
     // Contribution Management Routes
     Route::resource('contributions', ContributionController::class);
