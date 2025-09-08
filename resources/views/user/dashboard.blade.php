@@ -154,29 +154,29 @@
                 <div class="card shadow border-0  p-4 h-100">
                     <h5 class="fw-bold">حالة الطلب</h5>
                     @php
-                        $lastRow = null; // Initialize a variable to store the last row
-                        $r = count($user->approvals);
-
+                       $latestApproval = $user->approvals()->where('status','approved')->latest()->first();
                     @endphp
                     @if (isset($user->approvals))
+                    {{-- @if (isset($latestApproval)) --}}
 
-                        {{-- @dump(($user->approvals->last())) --}}
+                        {{-- @dump($latestApproval->loan_tier_id) --}}
                         @foreach ($user->approvals as $approval)
-                            @php
-                                $r--;
-                                $lastRow = $r;
-                            @endphp
-                            @if ($lastRow >= 0)
-                                <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
-                                @if ($approval->status =='approved')
-                                        <span class="badge bg-main text-white py-2 px-3 fw-normal fs-6">نشط</span>
-                                @elseif($approval->status =='rejected')
-                                    <span class="badge alert alert-danger text-dark py-2 px-3 fw-normal fs-6">{{$approval->notes}}</span>
-                                @else
-                                <span class="badge bg-warning text-dark py-2 px-3 fw-normal fs-6">طلبك قيد المراجعة</span>
-                                <p class="text-muted mt-2 mb-0">نحن نعمل على مراجعة طلبك وإعلامك بالنتيجة قريباً.</p>
+                                @if($approval->loanTier->tier_number === $latestApproval->loan_tier_id)
+                                    {{-- @dump($latestApproval) --}}
+                                    <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
+
+                                    @if ($approval->status =='approved')
+                                            <span class="badge bg-main text-white py-2 px-3 fw-normal fs-6">نشط</span>
+                                    @endif
                                 @endif
-                            @endif
+                                @if($approval->status =='rejected')
+                                    <span class="badge alert alert-danger text-dark py-2 px-3 fw-normal fs-6">{{$approval->notes}}</span>
+                                @elseif($approval->status =='pending')
+
+                                    <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
+                                    <span class="badge bg-warning text-dark py-2 px-3 fw-normal fs-6">طلبك قيد المراجعة</span>
+                                    <p class="text-muted mt-2 mb-0">نحن نعمل على مراجعة طلبك وإعلامك بالنتيجة قريباً.</p>
+                                @endif
 
                         @endforeach
                     @endif

@@ -44,8 +44,6 @@ class UserDashboardController extends Controller
         $next_payment_amount = 0; // Replace with your actual calculation
         $pending_for_approval = 0;
         $lastRow = null; // Initialize a variable to store the last row
-        // $r = count($user->approvals);
-        // $r--;
 
         foreach ($user->approvals as $approval){
 
@@ -57,11 +55,12 @@ class UserDashboardController extends Controller
 
         }
 
-
+        $current_tier = ContributionApprovals::where('user_id',user_id())->where('status','approved')->latest()->first();
+        //  dump($current_tier);
         // Pass all the necessary variables to the dashboard view
         $isLoanEligible = $this->isLoanEligible(); // Call the new method
 
-        return view('user.dashboard', compact('user', 'total_contributions', 'available_loan_balance', 'available_loan_amount', 'next_payment_amount','loan_tiers', 'isLoanEligible','pending_for_approval'));
+        return view('user.dashboard', compact('user', 'total_contributions', 'available_loan_balance', 'available_loan_amount', 'next_payment_amount','loan_tiers', 'isLoanEligible','pending_for_approval','current_tier'));
     }
 
     /**

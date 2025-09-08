@@ -51,7 +51,9 @@ class DashboardController extends Controller
             return view('admin.approvals.show1', compact('approval', 'loanTiers'));
 
         }elseif($approval->type === 'tier_change_request'){
-            return view('admin.approvals.show1', compact('approval', 'loanTiers'));
+            $user_id = $approval->user->id;
+            $current_tier = ContributionApprovals::where('user_id',$user_id)->where('status','approved')->latest()->first();
+            return view('admin.approvals.show1', compact('approval', 'loanTiers','current_tier'));
 
         }
     }
@@ -113,7 +115,7 @@ class DashboardController extends Controller
                     $approval->user->update(['loan_tier_id' => $approval->loan_tier_id]);
 
                     // Update the approval status
-                    $approval->update(['status' => 'approved']);
+                    $approval->update(['status' => 'approved','notes' => $request->input('notes')]);
 
                     $message = 'تمت الموافقة على طلب تغيير الشريحة بنجاح.';
                 } elseif ($approval->type === 'contribution') {

@@ -207,6 +207,10 @@
                         <h5 class="fw-bold mb-3">تفاصيل طلب تغيير الشريحة</h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>الشريحة الحالية:</strong>
+                                <span>{{ $current_tier->loan_tier_id }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <strong>الشريحة المطلوبة:</strong>
                                 <span>{{ $approval->loanTier->tier_number }}</span>
                             </li>
@@ -226,6 +230,10 @@
                         <h5 class="fw-bold mb-3">الإجراءات</h5>
                         <form action="{{ route('admin.approvals.process', $approval->id) }}" method="POST">
                             @csrf
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">ملاحظات (اختياري):</label>
+                                <textarea name="notes" id="notes" class="form-control" rows="3"></textarea>
+                            </div>
                             <div class="mb-3">
                                 <label for="action" class="form-label">القرار:</label>
                                 <select name="action" id="action" class="form-select" required>

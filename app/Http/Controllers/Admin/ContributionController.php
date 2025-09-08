@@ -32,12 +32,11 @@ class ContributionController extends Controller
         $users = User::all();
         return view('admin.contributions.create', compact('users'));
     }
-    /**
-     * Show the form for uploading a bank statement file.
-     */
-    public function showUploadFormContribution()
+
+    public function uploadBankExcel()
     {
-        return view('admin.contributions.upload');
+        $users = User::all();
+        return view('admin.contributions.upload', compact('users'));
     }
 
     /**
