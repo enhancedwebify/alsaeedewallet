@@ -94,7 +94,7 @@ Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
 
     // Show the form for uploading bank statements
-    Route::get('/contributions/upload', [ContributionController::class, 'showUploadForms'])->name('contributions.uploads');
+    Route::get('/contributions/upload', [ContributionController::class, 'showUploadFormContribution'])->name('contributions.upload');
 
     // Process the uploaded bank statement
     Route::post('/contributions/import', [ContributionController::class, 'import'])->name('contributions.import');

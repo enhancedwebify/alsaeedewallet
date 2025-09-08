@@ -35,10 +35,8 @@ class ContributionController extends Controller
     /**
      * Show the form for uploading a bank statement file.
      */
-    public function showUploadForms()
+    public function showUploadFormContribution()
     {
-        // echo "dd";
-        echo 'www';
         return view('admin.contributions.upload');
     }
 

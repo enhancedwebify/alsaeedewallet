@@ -20,7 +20,6 @@
         }
 
         body {
-            background-color: #f0f2f5;
             color: #333;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: right;
