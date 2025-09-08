@@ -5,12 +5,12 @@
             لوحة التحكم
         </a>
     </li>
-    <li class="nav-item mb-2">
+    {{-- <li class="nav-item mb-2">
         <a href="{{ route('admin.approvals.pending') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-hourglass-split ms-2"></i>
             طلبات الموافقة المعلقة
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item mb-2">
         <a href="{{ route('admin.users.index') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-people-fill ms-2"></i>

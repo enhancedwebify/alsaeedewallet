@@ -176,7 +176,9 @@
                                         {{-- Placeholder for a loop through your pending requests --}}
                                         @forelse ($pendingApprovals as $request)
                                         <tr>
-                                            <td>{{ $request->user->full_name }}</td>
+                                            <td>
+                                                {{ $request->user->full_name }}
+                                            </td>
                                             <td>{{ str_replace(
                                                     ['contribution','loan_request','tier_change_request'],
                                                     ['مساهمة','طلب قرض','طلب تغيير شريحة مساهمة'],

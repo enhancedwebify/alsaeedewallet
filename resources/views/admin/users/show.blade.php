@@ -13,7 +13,7 @@
             تفاصيل العضو
         </div>
         <div class="card-body">
-            <p><strong>الاسم الكامل:</strong> {{ $user->name }}</p>
+            <p><strong>الاسم الكامل:</strong> {{ $user->full_name }}</p>
             <p><strong>البريد الإلكتروني:</strong> {{ $user->email }}</p>
             <p><strong>حالة الحساب:</strong>
                 @if ($user->is_admin==1)

@@ -44,6 +44,7 @@ class DashboardController extends Controller
                           ->get();
         // Calculate the fund balance
         $fundBalance = $totalContributions - $totalLoans;
+
         return view('superuser.dashboard', [
             'total_users' => $total_users,
             'pending_requests' => $pending_requests,

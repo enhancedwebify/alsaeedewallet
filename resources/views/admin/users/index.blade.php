@@ -35,8 +35,13 @@
                         </td>
                         <td>
                             <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-sm btn-primary text-white">عرض</a>
-                            <a href="#" class="btn btn-sm btn-dark text-white">تعديل</a>
-                            <a href="#" class="btn btn-sm btn-danger text-white">حذف</a>
+                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-dark text-white">تعديل</a>
+                            {{-- <a href="#" class="btn btn-sm btn-danger text-white">حذف</a> --}}
+                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger text-white" onclick="return confirm('هل أنت متأكد من رغبتك في حذف هذا العضو؟')">حذف</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
