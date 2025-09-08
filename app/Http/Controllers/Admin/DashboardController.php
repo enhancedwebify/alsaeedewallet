@@ -39,7 +39,7 @@ class DashboardController extends Controller
         $loanTiers = LoanTier::all();
 
         // This is a temporary line to help us debug
-        dump($approval->type);
+        // dump($approval->type);
         if($approval->type === 'loan_request'){
             dump([
                 'requested_loan_amount' => $requestedLoanAmount,
@@ -48,6 +48,9 @@ class DashboardController extends Controller
             ]);
             return view('admin.approvals.show1', compact('approval', 'loanTiers','isGuarantorRequired', 'allUsers'));
         }elseif($approval->type === 'contribution'){
+            return view('admin.approvals.show1', compact('approval', 'loanTiers'));
+
+        }elseif($approval->type === 'tier_change_request'){
             return view('admin.approvals.show1', compact('approval', 'loanTiers'));
 
         }
