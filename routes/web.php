@@ -86,6 +86,9 @@ Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
+    // Explicitly define the destroy route to ensure it exists
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
     // Route to handle loan repayment
     Route::post('/loans/{loan}/repay', [LoanController::class, 'repay'])->name('loans.repay');
     // Route to show a specific loan's details
