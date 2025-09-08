@@ -62,6 +62,13 @@ class DashboardController extends Controller
     {
         // Find the approval request by its ID and eagerly load the related user data
         $approval = ContributionApprovals::with(['user', 'loanTier'])->findOrFail($id);
+
+        // Check if the approval record exists
+        if (!$approval) {
+            // If not, redirect back with an error message
+            return redirect()->route('admin.approvals.pending')
+                             ->with('error', 'طلب الموافقة غير موجود.');
+        }
         $isGuarantorRequired = false;
 
         // This logic only applies to loan requests
