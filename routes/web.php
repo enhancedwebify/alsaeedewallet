@@ -77,12 +77,19 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 Route::get('/login', [SuperuserController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/login', [SuperuserController::class, 'login']);
 Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(function () {
+     // User Management Routes
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+
     // Route to handle loan repayment
     Route::post('/loans/{loan}/repay', [LoanController::class, 'repay'])->name('loans.repay');
     // Route to show a specific loan's details
     Route::get('/loans/{loan}', [LoanController::class, 'show'])->name('loans.show');
 
     Route::post('/loans/{loan}/repay', [LoanController::class, 'repay'])->name('loans.repay');
+
+    // Financial Transactions Log
+    Route::get('/financial-reports/transactions', [FinancialReportController::class, 'transactions'])->name('financial.reports.transactions');
 
      // Financial Reports Dashboard
     Route::get('/financial-reports', [FinancialReportController::class, 'index'])->name('financial.reports');

@@ -42,6 +42,12 @@
         </a>
     </li>
     <li class="nav-item mb-2">
+        <a href="{{ route('admin.financial.reports.transactions') }}" class="nav-link text-white d-flex align-items-center">
+            <i class="bi bi-bar-chart-line-fill ms-2"></i>
+            سجل المعاملات المالية
+        </a>
+    </li>
+    <li class="nav-item mb-2">
         <a href="{{ route('admin.settings') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-gear-fill ms-2"></i>
             الإعدادات

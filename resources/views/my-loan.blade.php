@@ -31,10 +31,12 @@
     @if (count($loans) > 0)
         @foreach ($loans as $loan)
             <div class="card mb-5">
-                <div class="card-header bg-{{ $loan->status == 'finished' ? 'success' : 'primary' }} text-white">
+                <div class="card-header bg-{{ $loan->status == 'finished' ? 'success' : ($loan->status == 'pending' ? 'main' : 'primary') }} text-white">
                     <h4 class="mb-0">
                         @if ($loan->status == 'finished')
                             قرض منتهي
+                        @elseif($loan->status == 'pending')
+                            قيد المراجعة
                         @else
                             قرض نشط
                         @endif

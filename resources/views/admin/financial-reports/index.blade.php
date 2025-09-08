@@ -37,5 +37,43 @@
             </div>
         </div>
     </div>
+     <h3 class="mt-5">القروض النشطة</h3>
+    @if ($activeLoans->count() > 0)
+        <table class="table table-striped table-bordered">
+            <thead class="bg-light">
+                <tr>
+                    <th>اسم العضو</th>
+                    <th>المبلغ الإجمالي للقرض</th>
+                    <th>المبلغ المسدد</th>
+                    <th>المبلغ المتبقي</th>
+                    <th>الحالة</th>
+                    <th>تاريخ الطلب</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($activeLoans as $loan)
+                    <tr>
+                        <td>{{ $loan->user->name }}</td>
+                        <td>{{ number_format($loan->amount, 2) }} ريال</td>
+                        <td>{{ number_format($loan->total_repaid_amount, 2) }} ريال</td>
+                        <td>{{ number_format($loan->amount - $loan->total_repaid_amount, 2) }} ريال</td>
+                        <td>
+                            @if ($loan->status == 'pending')
+                                قيد المراجعة
+                            @else
+                                نشط
+                            @endif
+                        </td>
+                        <td>{{ \Carbon\Carbon::parse($loan->request_date)->format('Y-m-d') }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <div class="alert alert-info text-center mt-4">
+            لا توجد قروض نشطة حالياً.
+        </div>
+    @endif
 </div>
+
 @endsection

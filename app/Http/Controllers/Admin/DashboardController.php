@@ -37,7 +37,11 @@ class DashboardController extends Controller
 
         // Calculate the total amount of loans disbursed
         $totalLoans = Loan::where('status', '!=', 'pending')->sum('amount');
-
+          // Fetch all active and pending loans for the detailed report
+        $activeLoans = Loan::with('user') // Eager load the user relationship
+                          ->where('status', '!=', 'finished')
+                          ->orderBy('request_date', 'asc')
+                          ->get();
         // Calculate the fund balance
         $fundBalance = $totalContributions - $totalLoans;
         return view('superuser.dashboard', [
@@ -50,6 +54,7 @@ class DashboardController extends Controller
             'totalContributions' => $totalContributions,
             'totalLoans' => $totalLoans,
             'fundBalance' => $fundBalance,
+            'activeLoans' => $activeLoans,
         ]);
     }
     public function showApproval($id)

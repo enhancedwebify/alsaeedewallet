@@ -217,7 +217,11 @@ class UserDashboardController extends Controller
             'type' => 'loan_request',
             'notes' => $request->input('notes'),
         ]);
-
+        Loan::create([
+            'user_id' => $user->id,
+            'loan_tier_id' => $request->input('loan_tier_id'),
+            'status' => 'pending',
+        ]);
         return redirect()->route('user.dashboard')->with('success', 'تم إرسال طلب القرض بنجاح. سيتم مراجعته من قبل الإدارة.');
     }
       /**

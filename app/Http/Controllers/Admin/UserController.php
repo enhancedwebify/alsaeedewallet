@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,9 +13,20 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
-    }
+         $users = User::orderBy('full_name')->get();
 
+        return view('admin.users.index', compact('users'));
+    }
+      /**
+     * Display the specified user's profile.
+     */
+    public function show(User $user)
+    {
+        // Eager load the user's loans and contributions
+        $user->load(['loans.repayments', 'contributions']);
+
+        return view('admin.users.show', compact('user'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -27,14 +39,6 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
     {
         //
     }
