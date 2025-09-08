@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"  >
@@ -78,41 +79,17 @@
         /* Mobile: The offcanvas container is handled by Bootstrap's JS */
     </style>
     @include('layout.head')
-</head>
 <body>
-    <div class="d-flexs" id="wrapper">
+
+    @if(is_admin()==1)
         @include('layout.sidebar_superuser')
-
-        <div id="page-content-wrapper">
-            {{-- @include('layout.header') --}}
-
-            <div class="container py-4">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h2 class="text-main fw-bold">استيراد كشف حساب بنكي</h2>
-                            <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-primary">العودة إلى لوحة التحكم</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-8 mx-auto">
-                        <div class="card shadow border-0 p-4">
-                            <form action="{{ route('admin.contributions.import') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="file" class="form-label">ملف كشف الحساب (Excel):</label>
-                                    <input type="file" name="file" id="file" class="form-control" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">استيراد المساهمات</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    @else
+        @include('layout.sidebar')
+    @endif
+    <div class="container mt-5">
+        @yield('content')
     </div>
-    {{-- @include('layout.footer') --}}
+
+    @include('layout.scripts')
 </body>
 </html>

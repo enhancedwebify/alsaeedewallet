@@ -53,6 +53,7 @@ class LoginController extends Controller
             $request->session()->put('id_number', $user->id_number); // Or $request->session()->put('user', $user);
             $request->session()->put('email', $user->email); // Or $request->session()->put('user', $user);
             $request->session()->put('full_name', $user->full_name); // Or $request->session()->put('user', $user);
+            $request->session()->put('is_admin', $user->is_admin); // Or $request->session()->put('user', $user);
 
             return redirect()->intended('user/dashboard'); // Redirect to a dashboard or intended URL
         }

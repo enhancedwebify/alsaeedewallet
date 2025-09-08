@@ -80,6 +80,7 @@
     @include('layout.head')
 </head>
 <body>
+
     <div class="d-grid  col-12 col-md-8" id="wrapper">
         @include('layout.sidebar')
 
@@ -91,7 +92,7 @@
                     <div class="col-12">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h2 class="text-main fw-bold">تفاصيل طلب الموافقة</h2>
-                            <a href="{{ route('superuser.dashboard') }}" class="btn btn-sm btn-main">العودة إلى لوحة التحكم</a>
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-primary">العودة إلى لوحة التحكم</a>
                         </div>
                     </div>
                 </div>
@@ -184,8 +185,8 @@
                                             <option value="">اختر من القائمة</option>
                                             @foreach ($allUsers as $guarantor)
                                                 {{-- Exclude the current user from the list of guarantors --}}
-                                                @if ($guarantor->id != $approval->user->id)
-                                                    <option value="{{ $guarantor->id }}">{{ $guarantor->full_name }}</option>
+                                                @if ($guarantor->id != $approval->user->id && $guarantor->is_admin != 1)
+                                                    <option value="{{ $guarantor->id }}">{{ $guarantor->full_name }} | {{ $guarantor->id_number }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -195,7 +196,7 @@
                                         لا يتطلب هذا القرض وجود كفيل.
                                     </div>
                                 @endif
-                                <button type="submit" class="btn btn-main">تأكيد القرار</button>
+                                <button type="submit" class="btn btn-primary">تأكيد القرار</button>
                             </form>
                         </div>
                     @endif
@@ -241,7 +242,7 @@
                                     <option value="reject">رفض</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-main">تأكيد القرار</button>
+                            <button type="submit" class="btn btn-primary">تأكيد القرار</button>
                         </form>
                     </div>
                     @endif
@@ -284,7 +285,7 @@
                                     <option value="reject">رفض</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-main">تأكيد القرار</button>
+                            <button type="submit" class="btn btn-primary">تأكيد القرار</button>
                         </form>
                     </div>
                     @endif

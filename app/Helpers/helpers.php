@@ -10,3 +10,7 @@ function user_id(){
     $user_id = Session::get('user_id');
     return $user_id;
 }
+function is_admin(){
+    $is_admin = Session::get('is_admin');
+    return $is_admin;
+}

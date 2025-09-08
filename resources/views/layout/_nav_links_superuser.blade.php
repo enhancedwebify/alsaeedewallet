@@ -1,6 +1,6 @@
 <ul class="nav flex-column mb-auto p-0">
     <li class="nav-item mb-2">
-        <a href="{{ route('superuser.dashboard') }}" class="nav-link text-white d-flex align-items-center">
+        <a href="{{ route('admin.dashboard') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-speedometer2 ms-2"></i>
             لوحة التحكم
         </a>
@@ -17,16 +17,16 @@
             إدارة المستخدمين
         </a>
     </li>
-    <li class="nav-item mb-2">
+    {{-- <li class="nav-item mb-2">
         <a href="{{ route('admin.contributions.index') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-cash-stack ms-2"></i>
             إدارة المساهمات
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item mb-2">
         <a href="{{ route('admin.uploadBankExcel') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-cash-stack ms-2"></i>
-            رفع المساهمات
+            رفع كشف حساب بنكي
         </a>
     </li>
     <li class="nav-item mb-2">
@@ -36,7 +36,7 @@
         </a>
     </li>
     <li class="nav-item mb-2">
-        <a href="{{ route('admin.reports.index') }}" class="nav-link text-white d-flex align-items-center">
+        <a href="{{ route('admin.financial.reports') }}" class="nav-link text-white d-flex align-items-center">
             <i class="bi bi-bar-chart-line-fill ms-2"></i>
             التقارير
         </a>

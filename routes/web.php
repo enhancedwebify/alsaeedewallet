@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ContributionController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FinancialReportController;
 use App\Http\Controllers\UserDashboardController;
 
 
@@ -32,7 +33,16 @@ Route::middleware(['auth', IsAdmin::class])->prefix('superuser')->group(function
     Route::post('/approve/{user}', [SuperuserController::class, 'approveUser'])->name('superuser.approve');
     Route::post('/logout', [SuperuserController::class, 'logout'])->name('superuser.logout');
 });
+// Group for authenticated user routes
+Route::middleware(['auth'])->group(function () {
+    // Other authenticated routes...
 
+    // Route to display the user's loan dashboard
+    Route::get('/my-loan', [UserDashboardController::class, 'myLoan'])->name('my-loan');
+    // Route for the user's contributions dashboard
+    Route::get('/my-contributions', [UserDashboardController::class, 'myContributions'])->name('my-contributions');
+
+});
 // USER ROUTES
 Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::post('/new_loan', [UserDashboardController::class, 'store'])->name('newLoan');
@@ -44,9 +54,7 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
         return view('profile'); // Assuming you will create a profile view
     })->name('profile');
 
-    Route::get('/loans', function () {
-        return view('loans'); // A page for loan details
-    })->name('loans.index');
+    Route::get('/loans', [UserDashboardController::class, 'myLoan'])->name('loans.index');
 
     Route::get('/transactions', function () {
         return view('transactions'); // A page for all transactions
@@ -69,6 +77,15 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 Route::get('/login', [SuperuserController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/login', [SuperuserController::class, 'login']);
 Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Route to handle loan repayment
+    Route::post('/loans/{loan}/repay', [LoanController::class, 'repay'])->name('loans.repay');
+    // Route to show a specific loan's details
+    Route::get('/loans/{loan}', [LoanController::class, 'show'])->name('loans.show');
+
+    Route::post('/loans/{loan}/repay', [LoanController::class, 'repay'])->name('loans.repay');
+
+     // Financial Reports Dashboard
+    Route::get('/financial-reports', [FinancialReportController::class, 'index'])->name('financial.reports');
     // Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route to show the form for adding a contribution

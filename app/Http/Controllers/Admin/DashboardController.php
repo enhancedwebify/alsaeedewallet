@@ -8,11 +8,50 @@ use App\Models\LoanTier; // Don't forget to import the LoanTier model
 use App\Models\Loan; // Don't forget to import the LoanTier model
 use App\Models\User; // Don't forget to import the LoanTier model
 use App\Models\ContributionApprovals; // Don't forget to import the LoanTier model
+use App\Models\Contribution; // Don't forget to import the LoanTier model
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     //
+    public function index (){
+        // Fetch users who are not yet approved
+        $pendingRequests = User::where('is_approved', false)->get();
+        // return view('superuser.dashboard', compact('pendingRequests'));
+         // Fetch data for the dashboard cards
+        $total_users = User::count();
+        $pending_requests = ContributionApprovals::where('status', 'pending')->count();
+
+        // Assuming you have a 'contributions' and 'loans' table
+        $total_contributions = 0; // Or Contribution::sum('amount');
+        $total_loans = 0; // Or Loan::sum('amount');
+
+        // Fetch the pending requests for the table
+        $pendingApprovals = ContributionApprovals::with('user')->where('status', 'pending')->latest()->take(10)->get();
+
+        // Fetch the latest contributions for the contributions table
+        $latestContributions = Contribution::with('user')->latest()->orderBy('created_at','desc')->take(10)->get();
+        ##########
+         // Calculate the total amount of contributions
+        $totalContributions = Contribution::sum('amount');
+
+        // Calculate the total amount of loans disbursed
+        $totalLoans = Loan::where('status', '!=', 'pending')->sum('amount');
+
+        // Calculate the fund balance
+        $fundBalance = $totalContributions - $totalLoans;
+        return view('superuser.dashboard', [
+            'total_users' => $total_users,
+            'pending_requests' => $pending_requests,
+            'total_contributions' => $total_contributions,
+            'total_loans' => $total_loans,
+            'pendingApprovals' => $pendingApprovals,
+            'latestContributions' => $latestContributions,
+            'totalContributions' => $totalContributions,
+            'totalLoans' => $totalLoans,
+            'fundBalance' => $fundBalance,
+        ]);
+    }
     public function showApproval($id)
     {
         // Find the approval request by its ID and eagerly load the related user data
@@ -41,11 +80,11 @@ class DashboardController extends Controller
         // This is a temporary line to help us debug
         // dump($approval->type);
         if($approval->type === 'loan_request'){
-            dump([
-                'requested_loan_amount' => $requestedLoanAmount,
-                'total_contributions' => $totalContributions,
-                'is_guarantor_required' => $isGuarantorRequired,
-            ]);
+            // dump([
+            //     'requested_loan_amount' => $requestedLoanAmount,
+            //     'total_contributions' => $totalContributions,
+            //     'is_guarantor_required' => $isGuarantorRequired,
+            // ]);
             return view('admin.approvals.show1', compact('approval', 'loanTiers','isGuarantorRequired', 'allUsers'));
         }elseif($approval->type === 'contribution'){
             return view('admin.approvals.show1', compact('approval', 'loanTiers'));

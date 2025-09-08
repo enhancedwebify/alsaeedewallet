@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ContributionApprovals;
-use App\Models\Contributions;
+use App\Models\Contribution;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\LoanTier;
+use App\Models\Loan;
 
 class UserDashboardController extends Controller
 {
@@ -62,7 +63,21 @@ class UserDashboardController extends Controller
 
         return view('user.dashboard', compact('user', 'total_contributions', 'available_loan_balance', 'available_loan_amount', 'next_payment_amount','loan_tiers', 'isLoanEligible','pending_for_approval','current_tier'));
     }
+    /**
+     * Show the logged-in user's contributions dashboard.
+     */
+    public function myContributions()
+    {
+        // Get the authenticated user
+        $user = Auth::user();
 
+        // Fetch all contributions for the user, ordered by a recent date
+        $contributions = Contribution::where('user_id', $user->id)
+                                    ->orderBy('created_at', 'desc')
+                                    ->get();
+
+        return view('my-contributions', compact('contributions'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -204,6 +219,32 @@ class UserDashboardController extends Controller
         ]);
 
         return redirect()->route('user.dashboard')->with('success', 'تم إرسال طلب القرض بنجاح. سيتم مراجعته من قبل الإدارة.');
+    }
+      /**
+     * Show the logged-in user's loan dashboard.
+     */
+    public function myLoan()
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Find the user's active loan (if any)
+        // We will assume a user has only one active loan at a time
+        $activeLoan = Loan::where('user_id', $user->id)
+                          ->where('status', '!=', 'finished')
+                          ->first();
+        // dump($user);
+         // Fetch all loans for the user, ordered by a recent date
+        $loans = Loan::where('user_id', $user->id)
+                     ->orderBy('request_date', 'desc')
+                     ->get();
+        $repayments = null;
+        if ($activeLoan) {
+            // If an active loan exists, get its repayments
+            $repayments = $activeLoan->repayments()->orderBy('payment_date', 'desc')->get();
+        }
+
+        return view('my-loan', compact('activeLoan', 'repayments','loans'));
     }
     /**
      * Show the form for editing the specified resource.

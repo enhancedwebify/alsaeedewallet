@@ -30,8 +30,17 @@ class SuperuserController extends Controller
         ]);
 
         if (Auth::attempt($credentials) && Auth::user()->is_admin) {
+            $user = Auth::user();
+            // dump($user);
             $request->session()->regenerate();
-            return redirect()->intended('/superuser/dashboard');
+            $request->session()->put('user_id', $user->id); // Or $request->session()->put('user', $user);
+            $request->session()->put('id_number', $user->id_number); // Or $request->session()->put('user', $user);
+            $request->session()->put('email', $user->email); // Or $request->session()->put('user', $user);
+            $request->session()->put('full_name', $user->full_name); // Or $request->session()->put('user', $user);
+            $request->session()->put('is_admin', $user->is_admin); // Or $request->session()->put('user', $user);
+
+            return redirect()->intended('admin/dashboard'); // Redirect to a dashboard or intended URL
+            // return redirect()->intended('/superuser/dashboard');
         }
 
         return back()->withErrors([

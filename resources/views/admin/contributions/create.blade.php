@@ -92,7 +92,7 @@
                     <div class="col-12">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h2 class="text-main fw-bold">إضافة مساهمة جديدة</h2>
-                            <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-main">العودة إلى لوحة التحكم</a>
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-primary">العودة إلى لوحة التحكم</a>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                                     </select>
                                 </div>
 
-                                <button type="submit" class="btn btn-main">إضافة المساهمة</button>
+                                <button type="submit" class="btn btn-primary">إضافة المساهمة</button>
                             </form>
                         </div>
                     </div>

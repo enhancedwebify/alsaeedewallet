@@ -13,10 +13,6 @@
             --main-color: #2c3e50; /* A dark, professional color */
             }
 
-            .text-main {
-            color: var(--main-color) !important;
-            }
-
             .btn-main {
             background-color: var(--main-color);
             color: #fff;
@@ -56,9 +52,9 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             margin-bottom: 1.5rem;
         }
-        .text-main {
-            color: #551d7c; /* Assuming this is your main purple color */
-        }
+        /* .text-main {
+            color: #551d7c;
+        } */
         .bg-main-light {
             background-color: #f7f2fb;
         }
@@ -99,76 +95,71 @@
                         <h2 class="text-main fw-bold">لوحة تحكم الإدارة</h2>
                     </div>
                 </div>
+                <div class="container mt-3">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>التقارير المالية</h2>
+                        </div>
 
-                <div class="row">
-                    <div class="col-md-3 mb-4">
-                        <div class="card card-stats shadow border-0">
-                            <div class="card-body p-4">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <span class="h2 font-weight-bold mb-0">{{ $total_users }}</span>
-                                        <h5 class="card-title text-uppercase text-muted mb-0">إجمالي المستخدمين</h5>
-                                    </div>
-                                    <div class="col-4 text-end">
-                                        <i class="bi bi-people-fill icon-shape text-white rounded-circle"></i>
-                                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card text-center bg-main text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">إجمالي المساهمات</h5>
+                                    <p class="card-text fs-2">{{ number_format($totalContributions, 2) }}</p>
+                                    <p class="card-text">ريال</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card card-stats shadow border-0">
-                            <div class="card-body p-4">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <span class="h2 font-weight-bold mb-0">{{ $pending_requests }}</span>
-                                        <h5 class="card-title text-uppercase text-muted mb-0">طلبات الموافقة</h5>
-                                    </div>
-                                    <div class="col-4 text-end">
-                                        <i class="bi bi-hourglass-split icon-shape text-white rounded-circle"></i>
-                                    </div>
+
+                        <div class="col-md-4">
+                            <div class="card text-center bg-dark text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">إجمالي القروض المصروفة</h5>
+                                    <p class="card-text fs-2">{{ number_format($totalLoans, 2) }}</p>
+                                    <p class="card-text">ريال</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card card-stats shadow border-0">
-                            <div class="card-body p-4">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <span class="h2 font-weight-bold mb-0">{{ $total_contributions }}</span>
-                                        <h5 class="card-title text-uppercase text-muted mb-0">إجمالي المساهمات</h5>
-                                    </div>
-                                    <div class="col-4 text-end">
-                                        <i class="bi bi-cash-stack icon-shape text-white rounded-circle"></i>
-                                    </div>
+
+                        <div class="col-md-4">
+                            <div class="card text-center bg-success text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">رصيد الصندوق الحالي</h5>
+                                    <p class="card-text fs-2">{{ number_format($fundBalance, 2) }}</p>
+                                    <p class="card-text">ريال</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card card-stats shadow border-0">
-                            <div class="card-body p-4">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <span class="h2 font-weight-bold mb-0">{{ $total_loans }}</span>
-                                        <h5 class="card-title text-uppercase text-muted mb-0">إجمالي القروض</h5>
-                                    </div>
-                                    <div class="col-4 text-end">
-                                        <i class="bi bi-currency-dollar icon-shape text-white rounded-circle"></i>
-                                    </div>
+
+                        <div class="col-md-4">
+                            <div class="card text-center bg-main-light text-main">
+                                <div class="card-body">
+                                    <h5 class="card-title">طلبات الموافقة</h5>
+                                    <p class="card-text fs-2">{{ $pending_requests }}</p>
+                                    <p class="card-text">طلب</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card text-center bg-main-light text-main">
+                                <div class="card-body">
+                                    <h5 class="card-title">إجمالي المستخدمين</h5>
+                                    <p class="card-text fs-2">{{ $total_users }}</p>
+                                    <p class="card-text">مستخدم</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+
                 <div class="row mt-5">
                     <div class="col-12">
                         <div class="card shadow border-0">
                             <div class="card-header p-4 bg-transparent border-0 d-flex justify-content-between align-items-center">
                                 <h3 class="mb-0 fw-bold">طلبات الموافقة الأخيرة</h3>
-                                <a href="#" class="btn btn-sm btn-main">عرض الكل</a>
+                                <a href="#" class="btn btn-sm btn-primary">عرض الكل</a>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-hover align-items-center table-flush">
@@ -196,7 +187,7 @@
                                                     ['انتظار','مقبول'],
                                                     $request->status) }}</span></td>
                                             <td>
-                                                <a href="{{ route('admin.approvals.show', $request->id) }}"  class="btn btn-sm btn-main">عرض التفاصيل</a>
+                                                <a href="{{ route('admin.approvals.show', $request->id) }}"  class="btn btn-sm btn-primary">عرض التفاصيل</a>
                                             </td>
                                         </tr>
                                         @empty

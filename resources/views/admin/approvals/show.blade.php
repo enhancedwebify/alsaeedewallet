@@ -91,7 +91,7 @@
                     <div class="col-12">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h2 class="text-main fw-bold">تفاصيل طلب الموافقة</h2>
-                            <a href="{{ route('superuser.dashboard') }}" class="btn btn-sm btn-main">العودة إلى لوحة التحكم</a>
+                            <a href="{{ route('superuser.dashboard') }}" class="btn btn-sm btn-primary">العودة إلى لوحة التحكم</a>
                         </div>
                     </div>
                 </div>

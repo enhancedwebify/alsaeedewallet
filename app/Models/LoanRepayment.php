@@ -12,6 +12,7 @@ class LoanRepayment extends Model
 
     protected $primaryKey = 'id';
     protected $table = 'loan_repayments';
+    protected $guarded = [];
 
     public function loan()
     {
