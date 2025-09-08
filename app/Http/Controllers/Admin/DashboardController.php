@@ -39,6 +39,7 @@ class DashboardController extends Controller
         $loanTiers = LoanTier::all();
 
         // This is a temporary line to help us debug
+        dump($approval->type);
         if($approval->type === 'loan_request'){
             dump([
                 'requested_loan_amount' => $requestedLoanAmount,
