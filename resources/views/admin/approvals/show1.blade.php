@@ -209,7 +209,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <strong>الشريحة الحالية:</strong>
-                                <span>{{ $current_tier->loan_tier_id }}</span>
+                                <span>{{ ($current_tier->loan_tier_id!=null)? $current_tier->loan_tier_id:'' }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <strong>الشريحة المطلوبة:</strong>
