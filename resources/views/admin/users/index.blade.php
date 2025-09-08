@@ -4,7 +4,7 @@
 <div class="container mt-3">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>إدارة الأعضاء</h2>
-        <a href="{{ route('admin.users.create') }}" class="btn btn-success">إضافة عضو جديد</a>
+        <a href="{{ route('admin.users.create') }}" class="btn btn-primary">إضافة عضو جديد</a>
     </div>
     <hr>
 
