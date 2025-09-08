@@ -105,6 +105,9 @@ class DashboardController extends Controller
         }elseif($approval->type === 'tier_change_request'){
             $user_id = $approval->user->id;
             $current_tier = ContributionApprovals::where('user_id',$user_id)->where('status','approved')->latest()->first();
+            if($current_tier==null){
+                $current_tier = '';
+            }
             return view('admin.approvals.show1', compact('approval', 'loanTiers','current_tier'));
 
         }
