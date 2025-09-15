@@ -161,14 +161,14 @@
 
                         {{-- @dump($latestApproval->loan_tier_id) --}}
                         @foreach ($user->approvals as $approval)
-                                @if($approval->loanTier->tier_number === $latestApproval->loan_tier_id)
+                                {{-- @if($approval->loanTier->tier_number === $latestApproval->loan_tier_id) --}}
                                     {{-- @dump($latestApproval) --}}
                                     <div class="fw-bold py-2"><span class="fw-bold">الشريحة رقم: </span><span>{{$approval->loanTier->tier_number}} المساهمة {{$approval->loanTier->contribution_amount}} ريال مدة {{$approval->loanTier->contribution_period_months}} شهر</span></div>
 
                                     @if ($approval->status =='approved')
                                             <span class="badge bg-main text-white py-2 px-3 fw-normal fs-6">نشط</span>
                                     @endif
-                                @endif
+                                {{-- @endif --}}
                                 @if($approval->status =='rejected')
                                     <span class="badge alert alert-danger text-dark py-2 px-3 fw-normal fs-6">{{$approval->notes}}</span>
                                 @elseif($approval->status =='pending')
