@@ -66,7 +66,7 @@ class RegistrationController extends Controller
             'loan_tier_id' => $request->loan_tier_id,
         ]);
         // 4. (Optional) Log the user in and redirect
-        // Auth::login($user);
+        Auth::login($user);
 
         return redirect()->route('user.login')->with('success', 'تم التسجيل بنجاح! يرجى انتظار موافقة المسؤول.');
     }
