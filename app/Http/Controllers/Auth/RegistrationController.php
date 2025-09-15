@@ -61,7 +61,7 @@ class RegistrationController extends Controller
             // You can add other fields from the dbdiagram here if you've added them to the form
         ]);
 
-        $CA = ContributionApprovals::create([
+        ContributionApprovals::create([
             'user_id' => $user->id,
             'loan_tier_id' => $request->loan_tier_id,
         ]);
