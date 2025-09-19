@@ -31,7 +31,7 @@ class SuperuserController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-        dd($request->all());
+        // dd($request->all());
 
         if (Auth::attempt($credentials) && Auth::user()->is_admin) {
             $user = Auth::user();
