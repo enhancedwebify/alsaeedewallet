@@ -31,9 +31,9 @@ class LoginController extends Controller
     public function user_login(Request $request)
     {
         // Check if the admin is already logged in
-        // if (Auth::check()) {
-        //     return redirect()->route('user.dashboard');
-        // }
+        if (Auth::check()) {
+            return redirect()->route('user.dashboard');
+        }
         // 1. Validate the user's input
         $request->validate([
             'id_number' => 'required|string',
