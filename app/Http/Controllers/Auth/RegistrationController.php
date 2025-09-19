@@ -35,13 +35,24 @@ class RegistrationController extends Controller
         $request->validate([
             'full_name' => ['required', 'string', 'max:255'],
             'id_number' => ['required', 'string', 'unique:users,id_number'],
-            'phone_number' => ['required', 'string', 'max:20'],
+            'phone_number' => ['required', 'string', 'max:20', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
             // 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'password' => ['required', 'confirmed'],
             'id_photo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'terms_correct' => ['required', 'accepted'],
             'terms_agreed' => ['required', 'accepted'],
+        ], [
+            'full_name.required' => 'الاسم الكامل مطلوب.',
+            'id_number.required' => 'الهوية الوطنية مطلوبة.',
+            'id_number.unique' => 'الهوية الوطنية مسجلة مسبقاً.',
+            'email.required' => 'البريد الإلكتروني مطلوب.',
+            'email.email' => 'البريد الإلكتروني يجب أن يكون عنوان بريد إلكتروني صالح.',
+            'email.unique' => 'البريد الإلكتروني مسجل مسبقاً.',
+            'password.required' => 'كلمة المرور مطلوبة.',
+            'password.min' => 'كلمة المرور يجب أن لا تقل عن 8 أحرف.',
+            'password.confirmed' => 'تأكيد كلمة المرور غير متطابق.',
+            'phone_number.unique' => 'رقم الجوال مسجل مسبقاً.'
         ]);
 
         // 2. File Upload

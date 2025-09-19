@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ContributionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FinancialReportController;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\UserProfileController;
 
 
 Route::get('/terms-as-images', [App\Http\Controllers\DocumentsController::class, 'showTermsAsImages'])->name('terms.images');
@@ -49,10 +50,11 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
     // Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
-    // Dummy routes for the sidebar links
-    Route::get('/profile', function () {
-        return view('profile'); // Assuming you will create a profile view
-    })->name('profile');
+    // Show the user profile page
+    Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');
+
+    // Handle the profile update form submission
+    Route::put('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 
     Route::get('/loans', [UserDashboardController::class, 'myLoan'])->name('loans.index');
 
