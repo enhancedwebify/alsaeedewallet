@@ -61,7 +61,8 @@
                             @if (session('success'))
                                 <div class="alert alert-success">{{ session('success') }}</div>
                             @endif
-                            <form action="{{route('admin.login')}}" method="post">
+                            {{-- <form action="{{route('admin.login')}}" method="post"> --}}
+                            <form action="{{url('/login')}}" method="post">
                                 @csrf
                                 <div class="forminput">
 
