@@ -16,9 +16,9 @@ class SuperuserController extends Controller
     public function showLoginForm()
     {
         // Check if the admin is already logged in
-        // if (Auth::check() && Auth::user()->is_admin) {
-        //     return redirect()->route('admin.dashboard');
-        // }
+        if (Auth::check() && Auth::user()->is_admin) {
+            return redirect()->route('admin.dashboard');
+        }
         return view('admin.login');
     }
 
