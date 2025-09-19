@@ -21,6 +21,8 @@ class UserDashboardController extends Controller
         // return view('user.dashboard',compact('requests'));
         // Fetch the user's data along with the loan tier relationship
         $user = User::where('id_number', id_number())->with('approvals.loanTier')->first();
+        $latestApproval = $user->approvals()->where('status','approved')->where('type','contribution')->latest()->first();
+
          // Fetch all loan tiers from the database
         $loan_tiers = LoanTier::get();
 
@@ -55,7 +57,7 @@ class UserDashboardController extends Controller
             }
 
         }
-
+        $next_payment_amount= $latestApproval->loanTier->contribution_amount;
         $current_tier = ContributionApprovals::where('user_id',user_id())->where('status','approved')->where('type','contribution')->orWhere('type','tier_change_request')->latest()->first();
         //  dump($current_tier);
         $current_tier = User::where('id',user_id())->with('approvals')->latest()->first();
