@@ -28,7 +28,7 @@
                                 <span class="badge bg-primary">سداد قرض</span>
                             @endif
                         </td>
-                        <td>{{ $transaction->user_name ?? ($transaction->loan->user->name ?? 'غير معروف') }}</td>
+                        <td>{{ $transaction->user_name ?? ($transaction->loan->user->full_name ?? 'غير معروف') }}</td>
                         <td>{{ number_format($transaction->amount_paid ?? $transaction->amount, 2) }} ريال</td>
                         <td>{{ \Carbon\Carbon::parse($transaction->date)->format('Y-m-d H:i') }}</td>
                         <td>{{ $transaction->notes ?? 'لا توجد ملاحظات.' }}</td>
