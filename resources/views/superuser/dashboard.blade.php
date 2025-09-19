@@ -259,13 +259,7 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script> --}}
-    <script>
-        const lightbox = GLightbox({
-            touchNavigation: true,
-            loop: false,
-            autoplayVideos: false
-        });
-    </script>
+
 </body>
 
 </html>
