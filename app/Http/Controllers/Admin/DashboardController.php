@@ -104,7 +104,8 @@ class DashboardController extends Controller
 
         }elseif($approval->type === 'tier_change_request'){
             $user_id = $approval->user->id;
-            $current_tier = ContributionApprovals::where('user_id',$user_id)->where('status','approved')->latest()->first();
+            // $current_tier = ContributionApprovals::where('user_id',$user_id)->where('status','approved')->where('type','contribution')->orWhere('type','tier_change_request')->latest()->first();
+            $current_tier = User::where('id',$user_id)->with('approvals')->latest()->first();
             if($current_tier==null){
                 $current_tier = '';
             }

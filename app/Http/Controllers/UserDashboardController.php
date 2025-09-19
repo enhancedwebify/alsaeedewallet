@@ -48,7 +48,7 @@ class UserDashboardController extends Controller
 
         foreach ($user->approvals as $approval){
 
-            if ($approval->status =='approved'){
+            if ($approval->status =='approved' && ($approval->type =='contribution' || $approval->type == 'tier_change_request')){
                 $next_payment_amount = $approval->loanTier->contribution_amount; // Replace with your actual calculation
             }elseif($approval->status =='pending'){
                 $pending_for_approval ++;
@@ -56,8 +56,10 @@ class UserDashboardController extends Controller
 
         }
 
-        $current_tier = ContributionApprovals::where('user_id',user_id())->where('status','approved')->latest()->first();
+        $current_tier = ContributionApprovals::where('user_id',user_id())->where('status','approved')->where('type','contribution')->orWhere('type','tier_change_request')->latest()->first();
         //  dump($current_tier);
+        $current_tier = User::where('id',user_id())->with('approvals')->latest()->first();
+
         // Pass all the necessary variables to the dashboard view
         $isLoanEligible = $this->isLoanEligible(); // Call the new method
 

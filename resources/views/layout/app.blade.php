@@ -80,7 +80,7 @@
     </style>
     @include('layout.head')
 <body>
-
+    
     @if(is_admin()==1)
         @include('layout.sidebar_superuser')
     @else
@@ -90,6 +90,6 @@
         @yield('content')
     </div>
 
-    @include('layout.scripts')
+    @include('layout.scripts') 
 </body>
 </html>

@@ -32,7 +32,7 @@
         </div>
         <div class="card-body">
             @if ($user->loans->count() > 0)
-                <table class="table table-striped">
+                <table id="myTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>المبلغ</th>

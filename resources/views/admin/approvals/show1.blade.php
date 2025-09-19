@@ -212,15 +212,19 @@
                                 <span>{{ $current_tier->loan_tier_id }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <strong>الشريحة المطلوبة:</strong>
+                                <strong>المساهمة الشهرية الحالية:</strong>
+                                <span>{{ number_format($current_tier->loanTier->contribution_amount, 2) }} ريال</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong class="text-default">الشريحة المطلوبة:</strong>
                                 <span>{{ $approval->loanTier->tier_number }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <strong>المساهمة الشهرية الجديدة:</strong>
-                                <span>{{ number_format($approval->loanTier->monthly_installment, 2) }} ريال</span>
+                                <strong class="text-default">المساهمة الشهرية الجديدة:</strong>
+                                <span>{{ number_format($approval->loanTier->contribution_amount, 2) }} ريال</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <strong>الملاحظات:</strong>
+                                <strong class="ps-2">الملاحظات:</strong>
                                 <span>{{ $approval->notes ?? 'لا توجد ملاحظات.' }}</span>
                             </li>
                         </ul>

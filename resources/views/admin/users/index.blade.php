@@ -9,7 +9,7 @@
     <hr>
 
     @if ($users->count() > 0)
-        <table class="table table-striped table-bordered">
+        <table id="mydatatable" class="table table-striped table-bordered">
             <thead class="bg-light">
                 <tr>
                     <th>الاسم</th>

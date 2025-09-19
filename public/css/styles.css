@@ -51,7 +51,7 @@
 }
 
 .text-default{
-    color: #000080;
+    color: var(--color-main-dark);
 }
 
 .floating {

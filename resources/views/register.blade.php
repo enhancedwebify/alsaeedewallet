@@ -120,8 +120,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="iban" class="form-label">رقم IBAN</label>
-                        <input type="text" class="form-control form-control-lg" id="iban" name="iban" value="{{ old('iban') }}" required>
+                        <label for="iban" class="form-label">رقم الآيبان</label>
+                        <input type="text" class="form-control form-control-lg" maxlength="24" minlength="24" id="iban" name="iban" value="{{ old('iban') }}" required>
                         @error('iban')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
@@ -137,7 +137,7 @@
 
                     <div class="mb-3">
                         <label for="password" class="form-label">كلمة المرور</label>
-                        <input type="password" class="form-control form-control-lg" id="password" name="password" required autocomplete="new-password">
+                        <input type="text" class="form-control form-control-lg" id="password" name="password" required autocomplete="new-password">
                         @error('password')
                             <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
@@ -145,7 +145,8 @@
 
                     <div class="mb-3">
                         <label for="password_confirmation" class="form-label">تأكيد كلمة المرور</label>
-                        <input type="password" class="form-control form-control-lg" id="password_confirmation" name="password_confirmation" required>
+                        <input type="text" onkeyup="isMatched(this.value)" class="form-control form-control-lg" id="password_confirmation" name="password_confirmation" required>
+                        <small class="password_match_status"></small>
                     </div>
 
                     <div class="mb-3 form-check">
@@ -189,7 +190,7 @@
 
 
 
-                    <button type="submit" id="submitForm" class="btn btn-primary btn-lg w-100" disabled onclick="this.preventDefault()">تسجيل</button>
+                    <button type="submit" id="submitForm" class="btn btn-primary btn-lg w-100" disabled>تسجيل</button>
                 </form>
             </div>
             </main>
@@ -218,6 +219,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('myForm');
             const agreeBtn = document.getElementById('agreeAndCloseBtn');
             const termsCheckbox = document.getElementById('terms_agreed');
             const submitForm = document.getElementById('submitForm');
@@ -239,21 +241,63 @@
                 termsModal.hide();
                 submitForm.disabled = false;
             });
+
             form.addEventListener('submit', function (event) {
-            // Check if the checkbox is not checked
-            if (!termsCheckbox.checked) {
+                // Check if the checkbox is not checked
                 // Prevent the form from submitting
                 event.preventDefault();
-                // Show an alert to the user
-                alert('الرجاء الموافقة على الشروط والأحكام للمتابعة.');
-                // Or display an error message next to the checkbox
-                // const errorDiv = document.createElement('div');
-                // errorDiv.className = 'text-danger mt-2';
-                // errorDiv.textContent = 'يجب عليك الموافقة على الشروط.';
-                // termsCheckbox.parentNode.appendChild(errorDiv);
+                // **1. Call the isMatched function and get its return value**
+                //    We pass the password confirmation value to the function
+                const passwordConfirmation = document.getElementById('password_confirmation').value;
+                const isPasswordMatched = isMatched(passwordConfirmation);
+                console.log(isPasswordMatched);
+
+                if (isPasswordMatched ===1 ) {
+                    this.submit();
+                } else {
+                    // **3. Handle failed validations**
+                    if (isPasswordMatched !== 1) {
+                        // If passwords don't match, give feedback to the user
+                        const inputElement = document.getElementById('password_confirmation');
+                        inputElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+
+                    if (!termsCheckbox.checked) {
+                        // If terms are not checked, alert the user
+                        alert('الرجاء الموافقة على الشروط والأحكام للمتابعة.');
+                    }
+                }
+            });
+            //  var passStatus = 0;
+            function isMatched(match_password) {
+                let pass = document.getElementById('password').value;
+                var status = '';
+                if(match_password==pass){
+                    status = `<span class='text-success'>متطابق</span>`;
+                    document.querySelector('.password_match_status').innerHTML = status;
+                    return 1;
+                }else{
+                    status = `<span class='text-danger'>غير متطابق</span>`;
+                    document.querySelector('.password_match_status').innerHTML = status;
+                    return 0;
+                }
             }
         });
-        });
+        //  var passStatus = 0;
+        function isMatched(match_password) {
+            let pass = document.getElementById('password').value;
+            var status = '';
+            if(match_password==pass){
+                status = `<span class='text-success'>متطابق</span>`;
+                document.querySelector('.password_match_status').innerHTML = status;
+                return 1;
+            }else{
+                status = `<span class='text-danger'>غير متطابق</span>`;
+                document.querySelector('.password_match_status').innerHTML = status;
+                return 0;
+            }
+        }
+
     </script>
 </body>
 </html>
