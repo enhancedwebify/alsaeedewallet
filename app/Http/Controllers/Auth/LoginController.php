@@ -24,6 +24,10 @@ class LoginController extends Controller
     public function login_page()
     {
         if(id_number()){
+            // check if admin then redirect to admin dashboard
+            if(Auth::user()->is_admin)
+                return redirect()->route('admin.dashboard');
+            // else if not admin then surely it is normal user
             return redirect()->route('user.dashboard');
         }
         return view('user/login');
