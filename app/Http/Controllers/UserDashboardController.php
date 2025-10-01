@@ -17,18 +17,26 @@ class UserDashboardController extends Controller
      */
     public function index()
     {
+        // --- INITIALIZE ALL VARIABLES TO PREVENT 'UNDEFINED VARIABLE' ERRORS ---
+        $total_contributions = 0;
+        $available_loan_balance = 30000; // Assuming a default
+        $available_loan_amount = 0;
+        $next_payment_amount = 0;
+        $pending_for_approval = 0;
+        $current_tier = null;
         // $requests = User::where('id_number',id_number())->with('loanTier')->first();
         // return view('user.dashboard',compact('requests'));
         // Fetch the user's data along with the loan tier relationship
         $user = User::where('id_number', id_number())->with('approvals.loanTier')->first();
-        $latestApproval = $user->approvals()->where('status','approved')->where('type','contribution')->latest()->first();
 
-         // Fetch all loan tiers from the database
+        if (!$user) {
+            return redirect('/login'); // Safety measure if Auth::user() fails
+        }
+
+
+        // Fetch all loan tiers from the database
         $loan_tiers = LoanTier::get();
-
-        // $ca = ContributionApprovals::where('user_id',$user->id)->get();
-        // dump($user);
-        // 1. Calculate Total Contributions
+         // 1. Calculate Total Contributions
         // This assumes you have a 'contributions' relationship on your User model.
         // Example: total_contributions = $user->contributions()->sum('amount');
         // $total_contributions = 50000; // Replace with your actual calculation
@@ -37,30 +45,51 @@ class UserDashboardController extends Controller
         // 2. Calculate Available Loan Balance
         // This logic depends on your loan management system.
         // Example: available_loan_balance = calculate_available_loan_based_on_contributions($total_contributions);
-        $available_loan_balance = 30000; // Replace with your actual calculation
+
 
         // Calculate the maximum available loan amount
         $available_loan_amount = $total_contributions * 2;
+
+        // 2. Get the latest approved approval (could be null for new users)
+        // $latestApproval = $user->approvals()->where('status','approved')->where('type','contribution')->latest()->first();
+        $latestApproval = $user->approvals()
+                           ->where('status', 'approved')
+                           ->whereIn('type', ['contribution', 'tier_change_request'])
+                           ->latest()
+                           ->first();
+
         // 3. Calculate the Next Payment Amount (if any)
         // This logic depends on your loan payment schedule.
         // Example: next_payment_amount = $user->loans()->active()->first()->next_payment_amount;
-        $next_payment_amount = 0; // Replace with your actual calculation
-        $pending_for_approval = 0;
-        $lastRow = null; // Initialize a variable to store the last row
 
-        foreach ($user->approvals as $approval){
-
-            if ($approval->status =='approved' && ($approval->type =='contribution' || $approval->type == 'tier_change_request')){
-                $next_payment_amount = $approval->loanTier->contribution_amount; // Replace with your actual calculation
-            }elseif($approval->status =='pending'){
-                $pending_for_approval ++;
+        // 3. Loop through approvals to count PENDING and set next payment amount (SAFELY)
+        foreach ($user->approvals as $approval) {
+            if ($approval->status == 'pending') {
+                $pending_for_approval++;
             }
-
         }
-        $next_payment_amount= $latestApproval->loanTier->contribution_amount;
-        $current_tier = ContributionApprovals::where('user_id',user_id())->where('status','approved')->where('type','contribution')->orWhere('type','tier_change_request')->latest()->first();
+
+        // foreach ($user->approvals as $approval){
+        //     if ($approval->status =='approved' && ($approval->type =='contribution' || $approval->type == 'tier_change_request')){
+        //         // $next_payment_amount = $approval->loanTier->contribution_amount; // Replace with your actual calculation
+        //     }elseif($approval->status =='pending'){
+        //         $pending_for_approval ++;
+        //     }
+        // }
+
+        // 4. Set final payment amount and current tier (SAFELY)
+        if ($latestApproval) {
+            // This is now safe: check if the relationship exists
+            if ($latestApproval->loanTier) {
+                $next_payment_amount = $latestApproval->loanTier->contribution_amount;
+                $current_tier = $latestApproval->loanTier; // Set the actual tier model
+            }
+        }
+
+        // $next_payment_amount= $latestApproval->loanTier->contribution_amount;
+        // $current_tier = ContributionApprovals::where('user_id',user_id())->where('status','approved')->where('type','contribution')->orWhere('type','tier_change_request')->latest()->first();
         //  dump($current_tier);
-        $current_tier = User::where('id',user_id())->with('approvals')->latest()->first();
+        // $current_tier = User::where('id',user_id())->with('approvals')->latest()->first();
 
         // Pass all the necessary variables to the dashboard view
         $isLoanEligible = $this->isLoanEligible(); // Call the new method
