@@ -17,6 +17,8 @@ class UserDashboardController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->is_admin)
+            return redirect()->route('admin.dashboard');
         // --- INITIALIZE ALL VARIABLES TO PREVENT 'UNDEFINED VARIABLE' ERRORS ---
         $total_contributions = 0;
         $available_loan_balance = 30000; // Assuming a default
