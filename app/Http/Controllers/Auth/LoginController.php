@@ -36,6 +36,8 @@ class LoginController extends Controller
     {
         // Check if the admin is already logged in
         if (Auth::check()) {
+            if(Auth::user()->is_admin)
+                return redirect()->route('admin.dashboard');
             return redirect()->route('user.dashboard');
         }
         // 1. Validate the user's input
