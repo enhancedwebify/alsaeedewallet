@@ -1,6 +1,6 @@
 <nav id="sidebar" class="bg-dark text-white p-4 d-none d-md-block" style="width: 250px; position: fixed; top: 0; bottom: 0; right: 0; z-index: 1000;">
     <div class="sidebar-header text-center mb-4">
-        <a href="{{ route('superuser.dashboard') }}">
+        <a href="{{ route('admin.dashboard') }}">
             <img src="{{asset('img/familyewallet.png')}}" alt="شعار المحفظة" class="img-fluid" style="max-width: 100px;">
         </a>
         {{-- <h5 class="fw-bold mt-2">محفظة آل سعيّد</h5> --}}
@@ -17,7 +17,7 @@
 </nav>
 
 <div class="w-100 px-2 py-2 d-md-none d-block" >
-    <a href="{{ route('superuser.dashboard') }}">
+    <a href="{{ route('admin.dashboard') }}">
           <img src="{{asset('img/familyewallet.png')}}" alt="شعار المحفظة" class="img-fluid" style="max-width: 70px;">
       </a>
 
